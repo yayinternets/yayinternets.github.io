@@ -1,0 +1,1 @@
+What Would Hegel Do? - Desire and Recognition in the Pedagogical Relation 
