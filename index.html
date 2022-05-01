@@ -240,11 +240,11 @@
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script>
-        var aImages = ["https://i.imgur.com/y6PlMZm.jpg", "https://i.imgur.com/6FlUmI4.png"];
+        var aImages = ["https://i.imgur.com/6FlUmI4.png", "https://i.imgur.com/y6PlMZm.jpg"];
 
         jQuery(document).ready(function($){
             $(".show-more-btn").click(function(e){
-                document.querySelector("#mario").src = aImages[$(".show-more-item:hidden").length / 3];
+                document.querySelector("#mario").src = aImages[$(".show-more-item:hidden").length / 3 - 1];
                 $(".show-more-item:hidden").slice(0,3).fadeIn();
                 if ($(".show-more-item:hidden").length < 1) $(this).fadeOut();
             })
