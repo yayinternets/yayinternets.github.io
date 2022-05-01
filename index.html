@@ -241,11 +241,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script>
         var aImages = ["https://png.pngitem.com/pimgs/s/628-6287623_super-mario-bros-3-mario-flying-hd-png.png", "https://i.pinimg.com/564x/e0/b7/0c/e0b70c753d7e9b0ddb22e5decf76ee70.jpg"];
-        document.querySelector("#mario").src = aImages[$(".show-more-item:hidden").length / 3]
-
 
         jQuery(document).ready(function($){
             $(".show-more-btn").click(function(e){
+                document.querySelector("#mario").src = aImages[$(".show-more-item:hidden").length / 3];
                 $(".show-more-item:hidden").slice(0,3).fadeIn();
                 if ($(".show-more-item:hidden").length < 1) $(this).fadeOut();
             })
