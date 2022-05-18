@@ -426,11 +426,15 @@ lightboxImages.forEach(img => {
 
         jQuery(document).ready(function($){
             $(".show-more-btn").click(function(e){
-                document.querySelector("#mario").src = aImages[$(".show-more-item:hidden").length / 3 - 1];
-                $(".show-more-item:hidden").slice(0,3).fadeIn();
-                if ($(".show-more-item:hidden").length < 1) $(this).fadeOut();
+                fadeGroup();
             })
         })
+
+        function fadeGroup() { // assumes .show-more-item:hidden and aImages exists
+            document.querySelector("#mario").src = aImages[$(".show-more-item:hidden").length / 3 - 1];
+            $(".show-more-item:hidden").slice(0,3).fadeIn();
+            if ($(".show-more-item:hidden").length < 1) $(this).fadeOut();
+        }
     </script>
 
 
