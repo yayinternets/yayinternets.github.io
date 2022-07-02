@@ -168,10 +168,10 @@ lightboxImages.forEach(img => {
     body.style.overflow = 'hidden';
     e.stopPropagation();
     modalPopup.style.display = 'block';
-    ((data.title) ? modalElement('h1').style.display = ""; modalElement('h1').innerHTML = data.title : modalElement('h1').style.display = "none" );
-    ((data.description) ? modalElement('p').style.display = ""; modalElement('p').innerHTML = data.description : modalElement('p').style.display = "none" );
-    ((data.url) ? modalElement('a').style.display = ""; modalElement('a').href = data.url : modalElement('a').style.display = "none" );
-    ((data.repo) ? modalElement('.secondary-link').style.display = ""; modalElement('.secondary-link').href = data.repo : modalElement('.secondary-link').style.display = "none" );
+    if (data.title) { modalElement('h1').style.display = ""; modalElement('h1').innerHTML = data.title; } else { modalElement('h1').style.display = "none"; }
+    if (data.description) { modalElement('p').style.display = ""; modalElement('p').innerHTML = data.description; } else { modalElement('p').style.display = "none"; }
+    if (data.url) { modalElement('a').style.display = ""; modalElement('a').href = data.url; } else { modalElement('a').style.display = "none"; }
+    if (data.repo) { modalElement('.secondary-link').style.display = ""; modalElement('.secondary-link').href = data.repo; } else { modalElement('.secondary-link').style.display = "none"; }
 
     modalElement('img').src = img.src;
   });
