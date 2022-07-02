@@ -185,7 +185,7 @@ function dom_modalize_img_tags() {
 }
 
 // <!-- // GITHUB.io hack - change favicon/title -->
-function changeFavIconAndTitle(sURL, sTitle) { // refactor to make href a parameter
+function dom_changeFavIconAndTitle(sURL, sTitle) { // refactor to make href a parameter
         // window.addEventListener('load', function() { changeFavIcon(); }, false )
         sURL = 'https://earlyinvesting.com/wp-content/themes/earlyinvesting-redesign/templates/components/svgs/inc-icon-logo.svg';
         var link = document.querySelector("link[rel~='icon']");
