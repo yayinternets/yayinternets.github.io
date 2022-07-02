@@ -184,7 +184,21 @@ function dom_modalize_img_tags() {
     });    
 }
 
+// <!-- // GITHUB.io hack - change favicon/title -->
+function changeFavIconAndTitle(sURL, sTitle) { // refactor to make href a parameter
+        // window.addEventListener('load', function() { changeFavIcon(); }, false )
+        sURL = 'https://earlyinvesting.com/wp-content/themes/earlyinvesting-redesign/templates/components/svgs/inc-icon-logo.svg';
+        var link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+                        link = document.createElement('link');
+                        link.rel = 'icon';
+                        document.getElementsByTagName('head')[0].appendChild(link);
+        }
+        link.href = sURL;
 
+        document.title = "AGI Compasses"; // vs window.top.document.title?
+
+}
 
 // domBASICscripts => domscripts.serverUNsafe and ES5_UNsafe
 // try { // domscripts.serverUNsafe and ES5_UNsafe
