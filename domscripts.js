@@ -184,21 +184,27 @@ function dom_modalize_img_tags() {
     });    
 }
 
-// <!-- // GITHUB.io hack - change favicon/title -->
-function dom_changeFavIconAndTitle(sURL, sTitle) { // refactor to make href a parameter
-        // window.addEventListener('load', function() { changeFavIcon(); }, false )
-        sURL = 'https://earlyinvesting.com/wp-content/themes/earlyinvesting-redesign/templates/components/svgs/inc-icon-logo.svg';
-        var link = document.querySelector("link[rel~='icon']");
-        if (!link) {
-                        link = document.createElement('link');
-                        link.rel = 'icon';
-                        document.getElementsByTagName('head')[0].appendChild(link);
+function dom_changeTitleAndFavicon(sTitle, sURL) { // refactor to make <link rel undoable
+    // eg dom_changeTitleAndFavicon("title",'??');
+    // dom_changeTitleAndFavicon("title",'https://earlyinvesting.com/wp-content/themes/earlyinvesting-redesign/templates/components/svgs/inc-icon-logo.svg');
+    // GITHUB.io hack - change favicon/title -->
+    document.title = sTitle; // vs window.top.document.title?
+    if (sURL) {
+        if (sURL.length<5) { // then assume emoji.ico
+            document.head.appendHTML(`<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${sURL}</text></svg>">`)
+        } else { // then assume url.ico
+            // script>window.addEventListener('load', function() { changeFavIcon(); }, false )</script
+            var link = document.querySelector("link[rel~='icon']");
+            if (!link) {
+                            link = document.createElement('link');
+                            link.rel = 'icon';
+                            document.getElementsByTagName('head')[0].appendChild(link);
+            }
+            link.href = sURL;
         }
-        link.href = sURL;
-
-        document.title = "AGI Compasses"; // vs window.top.document.title?
-
+    }
 }
+
 
 // domBASICscripts => domscripts.serverUNsafe and ES5_UNsafe
 // try { // domscripts.serverUNsafe and ES5_UNsafe
