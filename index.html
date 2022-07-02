@@ -159,6 +159,8 @@ document.addEventListener('click', () => {
 
 const modalPopup = document.querySelector('.image-modal-popup');
 
+// .title, .description, .url, .repo, .src 
+
 // loops over each modal content img and adds click event functionality
 lightboxImages.forEach(img => {
   const data = img.dataset;
@@ -166,10 +168,11 @@ lightboxImages.forEach(img => {
     body.style.overflow = 'hidden';
     e.stopPropagation();
     modalPopup.style.display = 'block';
-    modalElement('h1').innerHTML = data.title;
-    modalElement('p').innerHTML = data.description;
-    modalElement('a').href = data.url;
-    modalElement('.secondary-link').href = data.repo;
+    ((data.title) ? modalElement('h1').style.display = ""; modalElement('h1').innerHTML = data.title : modalElement('h1').style.display = "none" );
+    ((data.description) ? modalElement('p').style.display = ""; modalElement('p').innerHTML = data.description : modalElement('p').style.display = "none" );
+    ((data.url) ? modalElement('a').style.display = ""; modalElement('a').href = data.url : modalElement('a').style.display = "none" );
+    ((data.repo) ? modalElement('.secondary-link').style.display = ""; modalElement('.secondary-link').href = data.repo : modalElement('.secondary-link').style.display = "none" );
+
     modalElement('img').src = img.src;
   });
 });
