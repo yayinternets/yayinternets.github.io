@@ -204,7 +204,44 @@ function dom_changeTitleAndFavicon(sTitle, sURL) { // refactor to make <link rel
         }
     }
 }
+function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
+    /* injects an image onto a dom element and overlays html over it. use GIMP to get pixels eg:
+        script> // Bensinger AGI Political Compass
+        window.addEventListener('load', function() { 
+                // BEGIN - clear tags
+                //document.querySelectorAll(".tags").forEach(o=>o.remove())
+                // generated from // https://docs.google.com/spreadsheets/d/1QtdWMxs7QlL2Q1czk07uGEBmldwplOFB064-Z6z1BAc/edit#gid=373060173
+                var aaTags = [["blah",0,0], ["blah",50,50], ["blah",100,100]];
+                // var oElement = document.querySelectorAll(".Bensinger")[0];
+                dom_addOverlaysToImage (
+                        document.body,
+                        "https://i.imgur.com/NTL6S2y.jpg",
+                        aaTags,
+                        1000, 1000
+                );
 
+        }, false )
+        </script
+
+    */
+                // undo - 
+                // document.querySelectorAll(".tags").forEach(o=>o.remove())
+                oElement.style.backgroundImage = "url(" + sURL + ")"
+                oElement.style.height = iHeight;
+                oElement.style.width = iWidth;
+                oElement.style.backgroundSize = "100% 100%";
+
+                aaTags.forEach((a)=>{
+                                oNewElement = document.createElement("div");
+                                oNewElement.classList = ["tags"];
+                                oNewElement.innerHTML = a[0];
+                                oNewElement.style.position = "absolute";
+                                oNewElement.style.left = oElement.getBoundingClientRect().x + a[1];
+                                oNewElement.style.top = oElement.getBoundingClientRect().y + a[2];
+                                document.body.appendChild(oNewElement);
+                })
+
+}
 
 // domBASICscripts => domscripts.serverUNsafe and ES5_UNsafe
 // try { // domscripts.serverUNsafe and ES5_UNsafe
