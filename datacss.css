@@ -243,6 +243,27 @@
     -moz-box-shadow: rgba(66, 140, 240, 0.4) 0px 10px 16px; 
 }
 
+/* <p> styles: superp, etc */
+.superp {
+  margin-top: 2.5rem;
+  line-height: 1.6rem;
+
+  align-items: center;
+  max-width: 700px;
+  margin: 20px auto;
+  font-family: Cardo, serif;  
+  
+}
+
+.superp:first-child:first-letter {
+  font-size: 3rem;
+  font-family: Montserrat, sans-serif;
+}
+
+.superp:first-line {
+  font-family: Montserrat, sans-serif;
+}
+
 /* .hovergrow effect */
 
 .hovergrow {
