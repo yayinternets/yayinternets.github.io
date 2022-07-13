@@ -244,12 +244,20 @@ function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
 }
 
 function dom_deconstructDOM(bDebug) {
+    function cropLeft45000(s) {
+        if (s.length>45000) {
+            s = "YIKES" + s.length + "\n" + s.substring(0,45000);
+        }
+        return s;
+    }
+    
 // function dom_deconstructDOM(sType, bDontDelete50000) {
     bDontDelete50000 = true;
+    sType = "";
     //bDelete50000 = !bDelete50000; // 
 // function deconstructDOM(sType, bDelete50000) {
     // copy(toTabDelimited(dom_deconstructDOM()))
-	var aArray = Array.from(document.head.children).concat(Array.from(document.body.children));
+        var aArray = Array.from(document.head.children).concat(Array.from(document.body.children));
   
     if (sType == "all") { // because sType == undefined doesn't work 
         
@@ -262,32 +270,34 @@ function dom_deconstructDOM(bDebug) {
         if (o.nodeName == "SCRIPT") {
             if (o.src && o.src.match(/js$/) ) {
                 // return { "head": o.outerHTML }
-                return { "library": o.src }
+                return { "library": cropLeft45000(o.src), }
             } else {
                 // if (o.innerHTML.trim().match(/document\.addEventListener\('DOMContentLoaded'\, \(event\) \=\> \{(.*)\}\)\;/)) {
                 if (o.outerHTML.trim().match(/addEventListener/)) {
                     console.log("test")
                 }
-                return { "script": o.innerText }
+                return { "script": cropLeft45000(o.innerText), }
             }
         } else if (o.nodeName == "LINK" && o.href.match(/css$/) ) {
-            return { "library": o.href };
+            return { "library": cropLeft45000(o.href), };
         } else if (o.nodeName == "STYLE") {
-            return { "css": o.innerText }
+            return { "css": cropLeft45000(o.innerText), };
         } else {
             // var bDontDelete50000 = bDelete50000// !bDelete50000;
                 //if (bDelete50000) {
                 //    return {"script": ""};
                 //} else 
-            sText = o.outerHTML;
+            sText = cropLeft45000(o.outerHTML);
+            /*
             if (sText.length > 49000) {
                 try {
                     sDeconstructionNotes = "yikes, @" + i + " - " + sText.length + " cannot be deconstructed into a gscell, but o has " + o.children.length + " children and can be deconstructed maybe? " + (Array.from(o.children).map(oo=>oo.children.length).join(",") );
                     // o.children.map(oo=>console.log(oo.children));
                 } catch(e) { sDeconstructionNotes = ""; } 
-            }
+            }*/ 
             oReturn = {};
-            oReturn[o.parentNode.nodeName.toLowerCase()] = (o.outerHTML.length > 49000 && bDontDelete50000 ? `<pre>${o.outerHTML.length} was removed per bDontDelete50000; sDeconstructionNotes = ${sDeconstructionNotes}</pre>` : o.outerHTML);
+            // oReturn[o.parentNode.nodeName.toLowerCase()] = (o.outerHTML.length > 49000 && bDontDelete50000 ? `<pre>${o.outerHTML.length} was removed per bDontDelete50000; sDeconstructionNotes = ${sDeconstructionNotes}</pre>` : o.outerHTML);
+            oReturn[o.parentNode.nodeName.toLowerCase()] = sText;
             return oReturn;
         }
     }).flat();
