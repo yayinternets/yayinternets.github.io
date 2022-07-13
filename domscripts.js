@@ -243,7 +243,8 @@ function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
 
 }
 
-function dom_deconstructDOM(sType, bDelete50000) {
+function dom_deconstructDOM(sType, bDontDelete50000) {
+    //bDelete50000 = !bDelete50000; // 
 // function deconstructDOM(sType, bDelete50000) {
     // copy(toTabDelimited(dom_deconstructDOM()))
     if (sType == undefined) {    
@@ -270,7 +271,7 @@ function dom_deconstructDOM(sType, bDelete50000) {
         } else if (o.nodeName == "STYLE") {
             return { "css": o.innerText }
         } else {
-            var bDontDelete50000 = !bDelete50000;
+            // var bDontDelete50000 = bDelete50000// !bDelete50000;
                 //if (bDelete50000) {
                 //    return {"script": ""};
                 //} else 
@@ -282,7 +283,7 @@ function dom_deconstructDOM(sType, bDelete50000) {
                 } catch(e) { sDeconstructionNotes = ""; } 
             }
             oReturn = {};
-            oReturn[o.parentNode.nodeName.toLowerCase()] = (o.outerHTML.length > 49000 && bDelete50000 ? `<pre>${o.outerHTML.length} was removed per bDelete50000; sDeconstructionNotes = ${sDeconstructionNotes}</pre>` : o.outerHTML);
+            oReturn[o.parentNode.nodeName.toLowerCase()] = (o.outerHTML.length > 49000 && bDontDelete50000 ? `<pre>${o.outerHTML.length} was removed per bDontDelete50000; sDeconstructionNotes = ${sDeconstructionNotes}</pre>` : o.outerHTML);
             return oReturn;
         }
     }).flat();
