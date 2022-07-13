@@ -243,13 +243,16 @@ function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
 
 }
 
-function dom_deconstructDOM(sType, bDontDelete50000) {
+function dom_deconstructDOM(bDebug) {
+// function dom_deconstructDOM(sType, bDontDelete50000) {
     bDontDelete50000 = true;
     //bDelete50000 = !bDelete50000; // 
 // function deconstructDOM(sType, bDelete50000) {
     // copy(toTabDelimited(dom_deconstructDOM()))
-    if (sType == undefined) {    
-        var aArray = Array.from(document.head.children).concat(Array.from(document.body.children));
+	var aArray = Array.from(document.head.children).concat(Array.from(document.body.children));
+  
+    if (sType == "all") { // because sType == undefined doesn't work 
+        
     } else if (sType == "head") {
         var aArray = Array.from(document.head.children);
     } else if (sType == "body") {
@@ -300,8 +303,11 @@ function dom_deconstructDOM(sType, bDontDelete50000) {
     // end reduce
 
     console.log("copy(toTabDelimited(dom_deconstructDOM()))");
-    return aReturn;
-
+    if (bDebug) {
+        return aReturn.map((oo,ii)=>{ return Object.keys(aReturn[ii]).map(o=>aReturn[ii][o].length) });
+    } else {
+        return aReturn;
+    }
 }
 
 // 2022 reset2 editors ace vs codeMirror
