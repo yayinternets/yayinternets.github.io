@@ -297,8 +297,8 @@ function dom_deconstructDOM(sType, bDelete50000) {
     aReturn = toRO(toVO(aReturn).filter(o=>o.join("")))
     // end reduce
 
-    return aReturn;
     console.log("copy(toTabDelimited(dom_deconstructDOM()))");
+    return aReturn;
 
 }
 
