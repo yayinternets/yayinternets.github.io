@@ -244,6 +244,7 @@ function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
 }
 
 function dom_deconstructDOM(sType, bDontDelete50000) {
+    bDontDelete50000 = true;
     //bDelete50000 = !bDelete50000; // 
 // function deconstructDOM(sType, bDelete50000) {
     // copy(toTabDelimited(dom_deconstructDOM()))
@@ -302,7 +303,6 @@ function dom_deconstructDOM(sType, bDontDelete50000) {
     return aReturn;
 
 }
-
 
 // 2022 reset2 editors ace vs codeMirror
 
