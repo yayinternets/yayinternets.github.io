@@ -1,6 +1,6 @@
-// new
+// new 2022
 function data_deconstructEmoji(sEmoji) {
-    // eg data_deconstructEmoji("?")
+    // eg data_deconstructEmoji("😀")
     var iCodePointAt = sEmoji.codePointAt(0).toString(16);
     return `JS = String.fromCodePoint("0x"+"${iCodePointAt}")
 HTML = &#x${iCodePointAt};`;
@@ -178,7 +178,8 @@ toCSVDelimited = function (a) {
 }; toCSV = function(s) { return toCSVDelimited(s); }
 
 // begin csv/tabs functions
-toDelimited = function(aInputArray, sDelimiter, sQualifier) { function returnAllKeysAmongAllObjectsInRecordsOrientedArray(aRecordsOriented) { return aRecordsOriented.reduce(function(agg, oElement313) { agg = agg.concat(Object.keys(oElement313)); agg = unique(agg); return agg; }, []) } var aColumns = returnAllKeysAmongAllObjectsInRecordsOrientedArray(aInputArray); return aInputArray.reduce(function(agg, oElement) { return agg + "\n" + aColumns.filter(function(oElement777) { return oElement777.trim() != "" }).reduce(function(agg001, oElement001, iIndex001) { return agg001 + ((iIndex001 == 0) ? "" : sDelimiter) + sQualifier + ((oElement[oElement001] == undefined ? "" : oElement[oElement001])).toString().replace(/\r\n/g, "<br>").replace(/\n/g, "<br>") + sQualifier; }, "") }, aColumns.map(function(oElement002) { return sQualifier + oElement002 + sQualifier; }).join(sDelimiter)) }
+// String.fromCharCode(245) = paragraph, 
+toDelimited = function(aInputArray, sDelimiter, sQualifier) { function returnAllKeysAmongAllObjectsInRecordsOrientedArray(aRecordsOriented) { return aRecordsOriented.reduce(function(agg, oElement313) { agg = agg.concat(Object.keys(oElement313)); agg = unique(agg); return agg; }, []) } var aColumns = returnAllKeysAmongAllObjectsInRecordsOrientedArray(aInputArray); return aInputArray.reduce(function(agg, oElement) { return agg + "\n" + aColumns.filter(function(oElement777) { return oElement777.trim() != "" }).reduce(function(agg001, oElement001, iIndex001) { return agg001 + ((iIndex001 == 0) ? "" : sDelimiter) + sQualifier + ((oElement[oElement001] == undefined ? "" : oElement[oElement001])).toString().replace(/\r\n/g, String.fromCharCode(245)).replace(/\n/g, String.fromCharCode(245)) + sQualifier; }, "") }, aColumns.map(function(oElement002) { return sQualifier + oElement002 + sQualifier; }).join(sDelimiter)) }
 
 // 01/09/2022 - place beside datascripts.convertTabDelimitedToValuesOriented
 function fromCSVToVO(sCSV) { return sCSV.split(String.fromCharCode(10)).map(o=>o.split(",")); }; convertCSVToValuesOriented = function(s) { return fromCSVToVO(s); }
@@ -609,7 +610,7 @@ try { // remove try/catch when es5ified 100%
     }
 } catch(e) {}
 
-/* dataLODASH?PANDASscripts => BEGIN PANDAS-INSPIRED, LODASH-DEPENDENT FUNCTIONS */
+/* dataLODASH·PANDASscripts => BEGIN PANDAS-INSPIRED, LODASH-DEPENDENT FUNCTIONS */
 
 
 // these lodash-related functions are minified into datascripts so I can keep datascripts under 50000 characters, also so I can focus on the "lodash"-ness of these data-related functions.
