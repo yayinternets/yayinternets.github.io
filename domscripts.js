@@ -263,7 +263,7 @@ function editor_ace_ify(e) {
         e.style.margin = 0;
         e.style.width="100%";
         
-        e.style.height="32em";
+        e.style.height="50%";
         e.style.marginTop="5px";
         e.style.fontSize="14px";
         
@@ -324,7 +324,7 @@ domLoadScripts_Link(`https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/ad
           mode: 'htmlmixed',
           value: 'var b = 3;'
         })
-        editor_codemirror.setSize(800, 300);
+        editor_codemirror.setSize("100%","50%");
         editor_codemirror.setValue(sText);
        
     }, 300)
