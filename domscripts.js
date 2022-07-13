@@ -185,7 +185,7 @@ function dom_modalize_img_tags() {
 }
 
 function dom_changeTitleAndFavicon(sTitle, sURL) { // refactor to make <link rel undoable
-    // eg dom_changeTitleAndFavicon("title",'??');
+    // eg dom_changeTitleAndFavicon("title",'❤️');
     // dom_changeTitleAndFavicon("title",'https://earlyinvesting.com/wp-content/themes/earlyinvesting-redesign/templates/components/svgs/inc-icon-logo.svg');
     // GITHUB.io hack - change favicon/title -->
     document.title = sTitle; // vs window.top.document.title?
@@ -242,6 +242,42 @@ function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
                 })
 
 }
+
+// 2022 reset2
+
+function editor_ace_ify(e) {
+    // function editor_codeMirror_ify(e) {}
+    // eg editor_ace_ify($$$$("textarea"));
+    try {ace} catch(ee) {
+        domLoadScripts_Link("https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"); 
+    }
+    
+    setTimeout(() => {
+        var sText = e.value || e.innerText;
+        // $$$$("textarea").outerHTML = `<pre style="font-size:19px;" id="editor"></pre>`;
+    
+        domReplaceDom($$$$("textarea"), `<pre style="font-size:19px;" id="editor"></pre>`);
+    
+        e = $$$$("#editor")
+        
+        e.style.margin = 0;
+        e.style.width="100%";
+        
+        e.style.height="32em";
+        e.style.marginTop="5px";
+        e.style.fontSize="14px";
+        
+        editor_ace = ace.edit(e); //ace.edit("editor");
+        editor_ace.setTheme("ace/theme/monokai");
+        editor_ace.setShowPrintMargin(false);
+        editor_ace.session.setMode("ace/mode/html");
+        // editor.setValue("#include <stdio.h>\n\n\nint main() {\n    // Complete the code.\n    return 0;\n}\n");
+        editor_ace.clearSelection();
+        editor_ace.setValue(sText);
+       
+    }, 300)
+}
+
 
 // domBASICscripts => domscripts.serverUNsafe and ES5_UNsafe
 // try { // domscripts.serverUNsafe and ES5_UNsafe
@@ -300,7 +336,7 @@ function domReplaceDom(oEl, oEl2) { // simplifies .replaceChild()
 domTableToValuesOriented = function(domTable) { return domTableToValuesOrientedDomTDs(domTable).map(function(oEl) { return oEl.map(function(oEl2) { return domGetTDTextOrValue(oEl2); }) }) }
 convertHTMLTableToValuesOriented = domTableToValuesOriented; 
 
-/* insertBeforeDOM() ? <element> ? prependHTML() ? <other elements></other elements> ? appendHTML() ? </element> ? insertAfterDOM() */
+/* insertBeforeDOM() ⦾ <element> ⦾ prependHTML() ⦾ <other elements></other elements> ⦾ appendHTML() ⦾ </element> ⦾ insertAfterDOM() */
 HTMLElement.prototype.prependHtml = function (element) {
     const div = document.createElement('div');
     div.innerHTML = element;
@@ -497,7 +533,7 @@ function dom_BindVariable(sVariable) { // sVariable is the name of the globalvar
 // domCOLORS //
 
 function getRandomLightColor() {
-// Excellent answer. Worked great for me because I was also wanting to avoid white and grey. ? 
+// Excellent answer. Worked great for me because I was also wanting to avoid white and grey. – 
   color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
   return color;
 }
@@ -520,10 +556,10 @@ var alertS = function(o) { alert(JSON.stringify(o)); }
 // domASCIIscripts (maybe dataASCIIscripts?)
 fStringFromCharCode = function() {
     // js's String.fromCharCode(10) vs gs's CHAR(10)
-    // "?".charCodeAt()
-    // "? ? ? ? ? ? ? ? ? ? ".split("").filter(o=>o.trim()).map(o=>`String.fromCharCode(${o.charCodeAt()})`).join("+")
+    // "·".charCodeAt()
+    // "• ◦ • ‣ ⁃ ○ ◙ ⦾ ⦿ ¤ ".split("").filter(o=>o.trim()).map(o=>`String.fromCharCode(${o.charCodeAt()})`).join("+")
     return {
-        "interpunct": `String.fromCharCode("183")`, // for replacing dots in googlesheet cells to prevent hyperlink-ification; An interpunct, ?, also known as an interpoint, middle dot, middot and centered dot or centred dot, is a punctuation mark consisting of a vertically centered dot used for interword separation in ancient Latin script.
+        "interpunct": `String.fromCharCode("183")`, // for replacing dots in googlesheet cells to prevent hyperlink-ification; An interpunct, ·, also known as an interpoint, middle dot, middot and centered dot or centred dot, is a punctuation mark consisting of a vertically centered dot used for interword separation in ancient Latin script.
         "interrobang": `String.fromCharCode(11800)+String.fromCharCode(8253)`,
         "exclamation": `String.fromCharCode(161)+String.fromCharCode(33)`,
         "question": `String.fromCharCode(191)+String.fromCharCode(63)`,
@@ -1517,7 +1553,7 @@ dom_jsSpreadsheetify = function(data, dom) {
         } else { var eventDotDetail = undefined; }
 
 
-        if (fFunction) {} else { fFunction = function() { alert("undefined ? and ?"); } }
+        if (fFunction) {} else { fFunction = function() { alert("undefined ƒ and λ"); } }
         if (typeof(aElements) == "string") { aElements = $$$a(aElements); }
         if (Array.isArray(aElements)) { } else { aElements = [aElements]; }
         aElements.forEach(oElement=>{
