@@ -243,7 +243,7 @@ function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
 
 }
 
-// 2022 reset2
+// 2022 reset2 editors ace vs codeMirror
 
 function editor_ace_ify(e) {
     // function editor_codeMirror_ify(e) {}
@@ -274,6 +274,58 @@ function editor_ace_ify(e) {
         // editor.setValue("#include <stdio.h>\n\n\nint main() {\n    // Complete the code.\n    return 0;\n}\n");
         editor_ace.clearSelection();
         editor_ace.setValue(sText);
+       
+    }, 300)
+}
+
+
+
+function editor_codeMirror_ify(e) {
+    // eg editor_ace_ify($$$$("textarea"));
+    try {CodeMirror} catch(ee) {
+
+        domLoadStyles_Link("https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.css","https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/tiddlywiki/tiddlywiki.min.css")
+
+
+domLoadScripts_Link(`https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.js`);
+           
+domLoadScripts_Link(`https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/addon/hint/html-hint.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/addon/hint/javascript-hint.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/dart/dart.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/css/css.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/javascript/javascript.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/php/php.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/python/python.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/xml/xml.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/commonlisp/commonlisp.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/crystal/crystal.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/julia/julia.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/mathematica/mathematica.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/htmlmixed/htmlmixed.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/htmlembedded/htmlembedded.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/shell/shell.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/powershell/powershell.min.js
+        https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/tiddlywiki/tiddlywiki.min.js`.split("\n"));
+
+
+    }
+    
+    setTimeout(() => {
+        var sText = e.value || e.innerText;
+        // $$$$("textarea").outerHTML = `<pre style="font-size:19px;" id="editor"></pre>`;
+    
+        domReplaceDom(e, `<pre style="font-size:19px;" id="editor"></pre>`);
+    
+        e = $$$$("#editor")
+    
+        var editorContainer = e;
+        editor_codemirror = CodeMirror(editorContainer, {
+          lineNumbers: true,
+          mode: 'htmlmixed',
+          value: 'var b = 3;'
+        })
+        editor_codemirror.setSize(800, 300);
+        editor_codemirror.setValue(sText);
        
     }, 300)
 }
