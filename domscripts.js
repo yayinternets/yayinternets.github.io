@@ -243,6 +243,66 @@ function dom_addImageOverlays(oElement, sURL, aaTags, iHeight, iWidth, ) {
 
 }
 
+function dom_deconstructDOM(sType, bDelete50000) {
+// function deconstructDOM(sType, bDelete50000) {
+    // copy(toTabDelimited(dom_deconstructDOM()))
+    if (sType == undefined) {    
+        var aArray = Array.from(document.head.children).concat(Array.from(document.body.children));
+    } else if (sType == "head") {
+        var aArray = Array.from(document.head.children);
+    } else if (sType == "body") {
+        var aArray = Array.from(document.body.children);
+    }
+    var aReturn = aArray.map((o,i)=>{
+        if (o.nodeName == "SCRIPT") {
+            if (o.src && o.src.match(/js$/) ) {
+                // return { "head": o.outerHTML }
+                return { "library": o.src }
+            } else {
+                // if (o.innerHTML.trim().match(/document\.addEventListener\('DOMContentLoaded'\, \(event\) \=\> \{(.*)\}\)\;/)) {
+                if (o.outerHTML.trim().match(/addEventListener/)) {
+                    console.log("test")
+                }
+                return { "script": o.innerText }
+            }
+        } else if (o.nodeName == "LINK" && o.href.match(/css$/) ) {
+            return { "library": o.href };
+        } else if (o.nodeName == "STYLE") {
+            return { "css": o.innerText }
+        } else {
+            var bDontDelete50000 = !bDelete50000;
+                //if (bDelete50000) {
+                //    return {"script": ""};
+                //} else 
+            sText = o.outerHTML;
+            if (sText.length > 49000) {
+                try {
+                    sDeconstructionNotes = "yikes, @" + i + " - " + sText.length + " cannot be deconstructed into a gscell, but o has " + o.children.length + " children and can be deconstructed maybe? " + (Array.from(o.children).map(oo=>oo.children.length).join(",") );
+                    // o.children.map(oo=>console.log(oo.children));
+                } catch(e) { sDeconstructionNotes = ""; } 
+            }
+            oReturn = {};
+            oReturn[o.parentNode.nodeName.toLowerCase()] = (o.outerHTML.length > 49000 && bDelete50000 ? `<pre>${o.outerHTML.length} was removed per bDelete50000; sDeconstructionNotes = ${sDeconstructionNotes}</pre>` : o.outerHTML);
+            return oReturn;
+        }
+    }).flat();
+
+    // begin reduce
+    // consolidate library into single cell
+    aLibraries = [];
+    aReturn = aReturn.reduce((a,e,i) => { if (e.library) { aLibraries.push(e.library); } else { a=a.concat(e) }; return a; }, [])
+    aReturn[0].library = aLibraries.join("\n");
+
+    // remove blanks
+    aReturn = toRO(toVO(aReturn).filter(o=>o.join("")))
+    // end reduce
+
+    return aReturn;
+    console.log("copy(toTabDelimited(dom_deconstructDOM()))");
+
+}
+
+
 // 2022 reset2 editors ace vs codeMirror
 
 function editor_ace_ify(e) {
