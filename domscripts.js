@@ -320,6 +320,67 @@ function dom_deconstructDOM(bDebug) {
     }
 }
 
+
+function dom_load_library() {
+    try {marked} catch(ee) {
+        domLoadScripts_Link("https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.0/marked.min.js")
+    }
+}
+
+/*
+
+mylibraries+animate+lodash+moment+d3
+
+https://manueldelanda.github.io/datascripts.js
+https://manueldelanda.github.io/datacss.css
+https://manueldelanda.github.io/domscripts.js
+
+https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css
+
+https://cdn.jsdelivr.net/lodash/4/lodash.min.js
+https://cdn.jsdelivr.net/npm/lodash-joins@3.1.1/dist/lodash-joins.min.js
+
+https://unpkg.com/lodash.combinations@18.10.0/index.js
+https://unpkg.com/lodash.multicombinations@1.0.0/index.js
+https://unpkg.com/lodash.permutations@1.0.0/index.js
+https://unpkg.com/lodash.multipermutations@1.0.0/index.js
+
+// https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js
+https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js
+
+https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js
+
+https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js
+
+https://d3js.org/d3.v4.js
+// https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js
+
+
+
+https://manueldelanda.github.io/datascripts.js
+https://manueldelanda.github.io/datacss.css
+https://manueldelanda.github.io/domscripts.js
+
+https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css
+
+https://cdn.jsdelivr.net/lodash/4/lodash.min.js
+https://cdn.jsdelivr.net/npm/lodash-joins@3.1.1/dist/lodash-joins.min.js
+
+https://unpkg.com/lodash.combinations@18.10.0/index.js
+https://unpkg.com/lodash.multicombinations@1.0.0/index.js
+https://unpkg.com/lodash.permutations@1.0.0/index.js
+https://unpkg.com/lodash.multipermutations@1.0.0/index.js
+
+
+https://manueldelanda.github.io/datascripts.js
+https://manueldelanda.github.io/datacss.css
+https://manueldelanda.github.io/domscripts.js
+
+*/
+
+
+
+
 // 2022 reset2 editors ace vs codeMirror
 
 function editor_ace_ify(e) {
