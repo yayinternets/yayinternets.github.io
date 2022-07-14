@@ -295,7 +295,7 @@ function dom_deconstructDOM(bDebug) {
                     // o.children.map(oo=>console.log(oo.children));
                 } catch(e) { sDeconstructionNotes = ""; } 
             }*/ 
-            oReturn = {};
+            oReturn = {["notes":window.location.href]};
             // oReturn[o.parentNode.nodeName.toLowerCase()] = (o.outerHTML.length > 49000 && bDontDelete50000 ? `<pre>${o.outerHTML.length} was removed per bDontDelete50000; sDeconstructionNotes = ${sDeconstructionNotes}</pre>` : o.outerHTML);
             oReturn[o.parentNode.nodeName.toLowerCase()] = sText;
             return oReturn;
