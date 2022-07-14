@@ -295,7 +295,7 @@ function dom_deconstructDOM(bDebug) {
                     // o.children.map(oo=>console.log(oo.children));
                 } catch(e) { sDeconstructionNotes = ""; } 
             }*/ 
-            oReturn = {["notes":window.location.href]};
+            oReturn = {};
             // oReturn[o.parentNode.nodeName.toLowerCase()] = (o.outerHTML.length > 49000 && bDontDelete50000 ? `<pre>${o.outerHTML.length} was removed per bDontDelete50000; sDeconstructionNotes = ${sDeconstructionNotes}</pre>` : o.outerHTML);
             oReturn[o.parentNode.nodeName.toLowerCase()] = sText;
             return oReturn;
@@ -311,7 +311,7 @@ function dom_deconstructDOM(bDebug) {
     // remove blanks
     aReturn = toRO(toVO(aReturn).filter(o=>o.join("")))
     // end reduce
-
+    aReturn[0].notes = window.location.href;
     console.log("copy(toTabDelimited(dom_deconstructDOM()))");
     if (bDebug) {
         return aReturn.map((oo,ii)=>{ return Object.keys(aReturn[ii]).map(o=>aReturn[ii][o].length) });
