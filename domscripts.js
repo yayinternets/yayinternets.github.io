@@ -321,65 +321,19 @@ function dom_deconstructDOM(bDebug) {
 }
 
 
-function dom_load_library() {
-    try {marked} catch(ee) {
-        domLoadScripts_Link("https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.0/marked.min.js")
-    }
+function dom_load_library(sLibrary) {
+    var aLibrariesVO = [["object","link"],["pug","https://s3-us-west-2.amazonaws.com/s.cdpn.io/229301/jade.js"],["marked","https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.0/marked.min.js"],["_","https://cdn.jsdelivr.net/lodash/4/lodash.min.js"],["$","https://code.jquery.com/jquery-3.6.0.min.js"],["animate.css","https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"],["d3","https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js"],["d3v4","https://d3js.org/d3.v4.js"],["gsap","https://unpkg.co/gsap@3/dist/gsap.min.js"],["ALL","https://cdnjs.cloudflare.com/ajax/libs/marked/0.5.0/marked.min.js\nmylibraries+animate+lodash+moment+d3\n\nhttps://manueldelanda.github.io/datascripts.js\nhttps://manueldelanda.github.io/datacss.css\nhttps://manueldelanda.github.io/domscripts.js\n\nhttps://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css\n\nhttps://cdn.jsdelivr.net/lodash/4/lodash.min.js\nhttps://cdn.jsdelivr.net/npm/lodash-joins@3.1.1/dist/lodash-joins.min.js\n\nhttps://unpkg.com/lodash.combinations@18.10.0/index.js\nhttps://unpkg.com/lodash.multicombinations@1.0.0/index.js\nhttps://unpkg.com/lodash.permutations@1.0.0/index.js\nhttps://unpkg.com/lodash.multipermutations@1.0.0/index.js\n\n// https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js\nhttps://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js\n\nhttps://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js\n\nhttps://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js\n\nhttps://d3js.org/d3.v4.js\n// https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js\n\nhttps://manueldelanda.github.io/datascripts.js\nhttps://manueldelanda.github.io/datacss.css\nhttps://manueldelanda.github.io/domscripts.js\n\nhttps://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css\n\nhttps://cdn.jsdelivr.net/lodash/4/lodash.min.js\nhttps://cdn.jsdelivr.net/npm/lodash-joins@3.1.1/dist/lodash-joins.min.js\n\nhttps://unpkg.com/lodash.combinations@18.10.0/index.js\nhttps://unpkg.com/lodash.multicombinations@1.0.0/index.js\nhttps://unpkg.com/lodash.permutations@1.0.0/index.js\nhttps://unpkg.com/lodash.multipermutations@1.0.0/index.js\n\n\nhttps://manueldelanda.github.io/datascripts.js\nhttps://manueldelanda.github.io/datacss.css\nhttps://manueldelanda.github.io/domscripts.js\n"],["_joins","https://cdn.jsdelivr.net/npm/lodash-joins@3.1.1/dist/lodash-joins.min.js\nhttps://unpkg.com/lodash.combinations\nhttps://unpkg.com/lodash.multicombinations\nhttps://unpkg.com/lodash.permutations\nhttps://unpkg.com/lodash.multipermutations"]];
+
+
+
+
+    toXXXOrientated(toRO(aLibrariesVO), "object")
+    sLinks = toXXXOrientated(toRO(aLibrariesVO), "object")[sLibrary].link.split("\n");
+    domLoadScripts_Link(sLinks);
+    //try {marked} catch(ee) {
+    //    domLoadScripts_Link(sLinks)
+    //}
 }
-
-/*
-
-mylibraries+animate+lodash+moment+d3
-
-https://manueldelanda.github.io/datascripts.js
-https://manueldelanda.github.io/datacss.css
-https://manueldelanda.github.io/domscripts.js
-
-https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css
-
-https://cdn.jsdelivr.net/lodash/4/lodash.min.js
-https://cdn.jsdelivr.net/npm/lodash-joins@3.1.1/dist/lodash-joins.min.js
-
-https://unpkg.com/lodash.combinations@18.10.0/index.js
-https://unpkg.com/lodash.multicombinations@1.0.0/index.js
-https://unpkg.com/lodash.permutations@1.0.0/index.js
-https://unpkg.com/lodash.multipermutations@1.0.0/index.js
-
-// https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js
-https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js
-
-https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js
-
-https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js
-
-https://d3js.org/d3.v4.js
-// https://cdnjs.cloudflare.com/ajax/libs/d3/7.3.0/d3.min.js
-
-
-
-https://manueldelanda.github.io/datascripts.js
-https://manueldelanda.github.io/datacss.css
-https://manueldelanda.github.io/domscripts.js
-
-https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css
-
-https://cdn.jsdelivr.net/lodash/4/lodash.min.js
-https://cdn.jsdelivr.net/npm/lodash-joins@3.1.1/dist/lodash-joins.min.js
-
-https://unpkg.com/lodash.combinations@18.10.0/index.js
-https://unpkg.com/lodash.multicombinations@1.0.0/index.js
-https://unpkg.com/lodash.permutations@1.0.0/index.js
-https://unpkg.com/lodash.multipermutations@1.0.0/index.js
-
-
-https://manueldelanda.github.io/datascripts.js
-https://manueldelanda.github.io/datacss.css
-https://manueldelanda.github.io/domscripts.js
-
-*/
-
-
-
 
 // 2022 reset2 editors ace vs codeMirror
 
