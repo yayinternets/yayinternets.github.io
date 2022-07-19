@@ -1,4 +1,4 @@
-// 2022 reset - to organize
+// 2022 "meta-dom" functions - dom_modalize_img_tags,dom_li_paginate, dom_li_paginate_fadeGroup, dom_changeTitleAndFavicon, dom_addImageOverlays, dom_deconstructDOM, dom_load_library
 function dom_modalize_img_tags() {
     // solution from codepen https://codepen.io/RileyB/pen/XQyaXy
     // prereqs: in your HTML just surround the img elements with <span class="image-modal-content"><img ></span>;
@@ -184,6 +184,54 @@ function dom_modalize_img_tags() {
     });    
 }
 
+function dom_li_paginate(el, aList) {
+    // consider refactoring withoutu aList allow it to assume that the button always says 'more', and that the chunksize number is assumed by spaces?  idk, gotta think it out...
+    // assumptions:
+    el.$$$("ul, ol").forEach(o=>o.style.display="none");
+    el.appendHTML(`<button onclick='dom_li_paginate_fadeGroup(this);' id='show-more-btn'>${aMoreButton[0]}</button>`);
+    $$$$("#show-more-btn").dataset.index = "0";
+    $$$$("#show-more-btn").dataset.total = el.$$$("ul, ol").length;
+    $$$$("#show-more-btn").dataset.iterations = aList.length;
+    $$$$("#show-more-btn").dataset.chunksize = Math.ceil( el.$$$("ul, ol").length / aList.length );
+    $$$$("#show-more-btn").dataset.aList = JSON.stringify(aList); // figure out a way to refactor this out..
+}
+
+function dom_li_paginate_fadeGroup(oThis) { // assumes .show-more-item:hidden and aImages exists
+    // eg oThis = $$$$("li")
+    // console.log(oThis.parentNode.$$$('.li[style="display:none;"'));
+
+    aHiddenNodes = oThis.parentNode.$$$a('ul[style="display: none;"], ol[style="display: none;"]');
+    
+    var iNumberOfElementsToFadeIn = parseInt(oThis.dataset.chunksize);
+    // console.log(aHiddenNodes);
+    aHiddenNodes = aHiddenNodes.slice(0,iNumberOfElementsToFadeIn);
+    // OLD vanilla, but need to refactor back in since I like vanilla over jQuery
+    // $(".show-more-item:hidden").slice(0,3).fadeIn();
+    aHiddenNodes.forEach(o=>$(o).fadeIn());
+
+    if (oThis.parentNode.$$$a('ul[style="display: none;"], ol[style="display: none;"]').length == 0) {
+        oThis.style.display="none";
+    }
+
+    aList = JSON.parse(oThis.dataset.aList);
+
+    // iterator - certainly there's a way to simplify?
+    var iIndex = parseInt($$$$("#show-more-btn").dataset.index);
+    $$$$("#show-more-btn").innerHTML = aList[parseInt(iIndex+1)];
+    $$$$("#show-more-btn").dataset.index = JSON.stringify(iIndex+1);
+
+    
+    /*
+    var iIndex = parseInt($$$$("#show-more-btn").dataset.index);
+    $$$$("#show-more-btn").innerHTML = aMoreButton[parseInt(iIndex+1)];
+    $$$$("#show-more-btn").dataset.index = JSON.stringify(iIndex+1);
+    
+    // document.querySelector("#mario").src = aImages[Math.ceil($(".show-more-item:hidden").length / 3 - 1)];
+    $(".show-more-item:hidden").slice(0,3).fadeIn();
+    // if ($(".show-more-item:hidden").length < 1) $(".show-more-btn").fadeOut();
+    */
+}
+
 function dom_changeTitleAndFavicon(sTitle, sURL) { // refactor to make <link rel undoable
     // eg dom_changeTitleAndFavicon("title",'❤️');
     // dom_changeTitleAndFavicon("title",'https://earlyinvesting.com/wp-content/themes/earlyinvesting-redesign/templates/components/svgs/inc-icon-logo.svg');
@@ -339,6 +387,10 @@ function dom_load_library(sLibrary, bDisplaySample) {
     //    domLoadScripts_Link(sLinks)
     //}
 }
+
+
+
+
 
 // 2022 reset2 editors ace vs codeMirror
 
