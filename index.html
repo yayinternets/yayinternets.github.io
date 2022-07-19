@@ -251,22 +251,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script> // tails DELETE - "https://i.imgur.com/UWJQq2Q.jpg"
 		// ??, ??, racoon, ?tanuki?, ??
-      	var aImages = ["https://i.imgur.com/6FlUmI4.png", "https://i.imgur.com/7PVxzWt.png", "https://i.imgur.com/DaM5FvT.png", "https://i.imgur.com/c1kakgw.png"];
+      	var aMoreButton = [
+          `<ul><div class="show-more-btn">⮕more..<img id="cloud" height="20" width="20" src="http://cdn.onlinewebfonts.com/svg/img_82020.png"></div></ul>`,
+          `<ul><div class="show-more-btn">⮕more..<img id="mario" height="20" width="20" src="https://i.imgur.com/6FlUmI4.png"></div></ul>`,
+          `<ul><div class="show-more-btn">⮕more..<img id="mario" height="20" width="20" src="https://i.imgur.com/7PVxzWt.png"></div></ul>`,
+          `<ul><div class="show-more-btn">⮕more..<img id="mario" height="20" width="20" src="https://i.imgur.com/DaM5FvT.png"></div></ul>`,
+          `<ul><div class="show-more-btn">⮕more..<img id="cloud" height="20" width="20" src="https://i.imgur.com/c1kakgw.png"></div></ul>`,
+        ];
 
-      	// lacan mirror, ghost mirror
-        var aProfileImages = ["https://i.imgur.com/PhX0fGp.png", "https://i.imgur.com/JNutA4v.jpeg"]
 
-        jQuery(document).ready(function($){
-            $(".show-more-btn").click(function(e){
-                fadeGroup();
-            })
-        })
-
-        function fadeGroup() { // assumes .show-more-item:hidden and aImages exists
-            document.querySelector("#mario").src = aImages[Math.ceil($(".show-more-item:hidden").length / 3 - 1)];
-            $(".show-more-item:hidden").slice(0,3).fadeIn();
-            if ($(".show-more-item:hidden").length < 1) $(".show-more-btn").fadeOut();
-        }
 
     </script>
 
@@ -668,28 +661,26 @@
                <p class="bold">About Me <img style="display:none" height="20" width="20" src="https://i.imgur.com/UjVJYxd.png"></p>
              </div
              <p>Studying and working on interdisciplinary projects leveraging reinforcement learning, natural language processing, data lakehousing and an ever-changing set of models/toolkits.</p><br /><p>I'm grateful to work with theorists and engineers with whom I develop and quality control immersive gamified solutions, which constantly challenge/champion my programming and language skills.</p><br /><p>Other interests include first principles thinking, technology evangelism, behavior and decision science, lateral thinking exercises, improv and standup, puns, and book clubs.</p><br /><p>🍵</p><br /><p></p>
-            <li>
-                <ul class="show-more-item" style="display: none;">⚽ scrumming, nudging projects along</ul>
-                <ul class="show-more-item" style="display: none;"><img width="15" height="13" src="https://i.imgur.com/GbxCcff.png"> circling back to open topics</ul>
-                <ul class="show-more-item" style="display: none;">🏈 punting knowledge</ul>
+            <li id="hideme">
+                <ul class="show-more-item" style="">⚽ scrumming, nudging projects along</ul>
+                <ul class="show-more-item" style=""><img width="15" height="13" src="https://i.imgur.com/GbxCcff.png"> circling back to open topics</ul>
+                <ul class="show-more-item" style="">🏈 punting knowledge</ul>
                 
                 <ul class="show-more-item">&nbsp;</ul>
                 
-                <ul class="show-more-item" style="display: none;">🚲 cycling through *conscious-*competence <span class="image-modal-content"><img height="12" width="25" src="https://i.imgur.com/JU7IPXE.jpg"></span> skills.</ul>
-                <ul class="show-more-item" style="display: none;">📚 managing *known-*knowns <span class="image-modal-content"><img height="12" width="25" src="https://i.imgur.com/KYKjid7.png"></span> risks. </ul>
-                <ul class="show-more-item" style="display: none;">❓ deciding *urgent-*important <span class="image-modal-content"><img height="12" width="40" src="https://i.imgur.com/cHlwBIT.png"></span> tasks. </ul> 
-                <ul class="show-more-item" style="display: none;">💡  traversing new *intentional-ground* <span class="image-modal-content"><img height="12" width="40" src="https://i.imgur.com/lmBYzLs.png"></span> ideas. </ul> 
+                <ul class="show-more-item" style="">🚲 cycling through *conscious-*competence <span class="image-modal-content"><img height="12" width="25" src="https://i.imgur.com/JU7IPXE.jpg"></span> skills.</ul>
+                <ul class="show-more-item" style="">📚 managing *known-*knowns <span class="image-modal-content"><img height="12" width="25" src="https://i.imgur.com/KYKjid7.png"></span> risks. </ul>
+                <ul class="show-more-item" style="">❓ deciding *urgent-*important <span class="image-modal-content"><img height="12" width="40" src="https://i.imgur.com/cHlwBIT.png"></span> tasks. </ul> 
+                <ul class="show-more-item" style="">💡  traversing new *intentional-ground* <span class="image-modal-content"><img height="12" width="40" src="https://i.imgur.com/lmBYzLs.png"></span> ideas. </ul> 
 
           
-                <ul class="show-more-item" style="display: none;"><img width="15" height="13" src="https://i.imgur.com/BNPk8UQ.png"> pivoting models (binary/ternary/matrix/tensor).</ul>
+                <ul class="show-more-item" style=""><img width="15" height="13" src="https://i.imgur.com/BNPk8UQ.png"> pivoting models (binary/ternary/matrix/tensor).</ul>
                 
                 <ul class="show-more-item">&nbsp;</ul>
                 
-                <ul class="show-more-item" style="display: none;">🤖 automating workflows to focus on what's important</ul>
-                <ul class="show-more-item" style="display: none;">🏆 championing mental health, team-building</ul>
-                <ul class="show-more-item" style="display: none;">🪞 reflecting, introspecting, challenging myself</ul>
-                
-                <ul><div class="show-more-btn">⮕more..<img id="mario" height="20" width="20" src="http://cdn.onlinewebfonts.com/svg/img_82020.png"></div></ul>
+                <ul class="show-more-item" style="">🤖 automating workflows to focus on what's important</ul>
+                <ul class="show-more-item" style="">🏆 championing mental health, team-building</ul>
+                <ul class="show-more-item" style="">🪞 reflecting, introspecting, challenging myself</ul>
                 <!-- <img height="20" width="20" src="https://i.imgur.com/IZVVNxP.png"> -->
             </li>
         </div>
