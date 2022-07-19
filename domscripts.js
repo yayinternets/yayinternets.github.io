@@ -185,10 +185,10 @@ function dom_modalize_img_tags() {
 }
 
 function dom_li_paginate(el, aList) {
-	// el is any <li> in the dom, it will hide all its ul/ol and append a button to paginate it out
+        // el is any <li> in the dom, it will hide all its ul/ol and append a button to paginate it out
     // consider refactoring withoutu aList allow it to assume that the button always says 'more', and that the chunksize number is assumed by spaces?  idk, gotta think it out...
-	//eg:
-	if (aList) {} else { aList = ["More..."]; }
+        //eg:
+        if (aList) {} else { aList = ["More..."]; }
     // assumptions:
     el.$$$("ul, ol").forEach(o=>o.style.display="none");
     el.appendHTML(`<button onclick='dom_li_paginate_fadeGroup(this);' id='show-more-btn'>${aList[0]}</button>`);
@@ -362,7 +362,7 @@ function dom_deconstructDOM(bDebug) {
     // remove blanks
     aReturn = toRO(toVO(aReturn).filter(o=>o.join("")))
     // end reduce
-    aReturn[0].notes = window.location.href + "/n" + "https://wappalyzer.com/lookup/" + window.location.href + "/n" + "https://builtwith.com/?" + superencode(window.location.href);
+    aReturn[0].notes = window.location.href + "\n" + "https://wappalyzer.com/lookup/" + window.location.href + "\n" + "https://builtwith.com/?" + superencode(window.location.href);
     console.log("copy(toTabDelimited(dom_deconstructDOM()))");
     window.open("https://builtwith.com/?" + superencode(window.location.href));
     if (bDebug) {
