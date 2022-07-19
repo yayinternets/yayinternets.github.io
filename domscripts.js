@@ -185,10 +185,13 @@ function dom_modalize_img_tags() {
 }
 
 function dom_li_paginate(el, aList) {
+	// el is any <li> in the dom, it will hide all its ul/ol and append a button to paginate it out
     // consider refactoring withoutu aList allow it to assume that the button always says 'more', and that the chunksize number is assumed by spaces?  idk, gotta think it out...
+	//eg:
+	if (aList) {} else { aList = ["More..."]; }
     // assumptions:
     el.$$$("ul, ol").forEach(o=>o.style.display="none");
-    el.appendHTML(`<button onclick='dom_li_paginate_fadeGroup(this);' id='show-more-btn'>${aMoreButton[0]}</button>`);
+    el.appendHTML(`<button onclick='dom_li_paginate_fadeGroup(this);' id='show-more-btn'>${aList[0]}</button>`);
     $$$$("#show-more-btn").dataset.index = "0";
     $$$$("#show-more-btn").dataset.total = el.$$$("ul, ol").length;
     $$$$("#show-more-btn").dataset.iterations = aList.length;
