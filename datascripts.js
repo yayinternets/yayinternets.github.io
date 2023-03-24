@@ -413,6 +413,21 @@ intersectionMultipleWords = function(sWords) { // this function assumes the sWor
 }
 // intersectionMultipleWords("TFR Halo Star Valkyrie;Halo Star Valkyrie").join(" ");
 
+// not es5-friendly
+function intersect(a, b) {
+  if (Array.isArray(a)) { // if a1DArray and not aRO
+      var setB = new Set(b);
+      return [...new Set(a)].filter(x => setB.has(x));
+  } else { // if aRO and not a1DArray
+      // eg // aList1 = [ { userId: 1234, userName: 'XYZ'  }, { userId: 1235, userName: 'ABC'  }, { userId: 1236, userName: 'IJKL' }, { userId: 1237, userName: 'WXYZ' }, { userId: 1238, userName: 'LMNO' } ]; aList2 = [ { userId: 1235, userName: 'ABC'  }, { userId: 1236, userName: 'IJKL' }, { userId: 1252, userName: 'AAAA' } ]; intersect(aList1, aList2)
+      // maybe return _.hashInnerJoin(aList1, aList2)?
+      
+  }
+}
+intersect.sample = function() { return `intersect([1,"a",2,3], [2,3,4,5, 'a'])`; }
+
+
+
 intersperse = function(arr, el) {
     var res = [], i=0;
     if (i < arr.length)
