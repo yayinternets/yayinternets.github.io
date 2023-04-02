@@ -887,7 +887,7 @@ explode = function (aInputArray, aColumns, sDelimiter) {
 
 leftantiArray = function(a,b) { return a.filter(function(item) { return b.indexOf(item) === -1 }) };
 
-pivottable=function(aInputArray, aPivotInstructions, bReplaceColumnNames) {
+pivottable=function(aInputArray, aPivotInstructions, bReplaceColumnNames, bDebugging) {
     var bIsRO = true; if (isVO(aInputArray)) { aInputArray = toRO(aInputArray); bIsRO = false; };
     aInputArray = normalizeRecordsOriented(aInputArray);
     
@@ -1053,33 +1053,40 @@ pivottable=function(aInputArray, aPivotInstructions, bReplaceColumnNames) {
             })
 
             sToEval = "var aPivotedData = _.map(oRecordsOrientationGroup, function(group){ return {\n" + sFirstPartOfReturn + sSecondPartOfReturn + "\n}; });"
-            // console.log(sToEval); // eval(sToEval)
-            eval(sToEval);
-            // copy(JSON.stringify(aPivotedData))
-            //console.log("oRecordsOrientationGroup = " + JSON.stringify(oRecordsOrientationGroup));
-            //console.log("aColumnsIndexAllCombinations" + JSON.stringify(aColumnsIndexAllCombinations));
-            //console.log(sToEval)
-            
-            if (bReplaceColumnNames) {
-                // this 3rd parameter (bReplaceColumnNames) only works when there's no more than 1 sAggInstruction AND when there's no columnColumns
-                // console.log(aRenamedColumns);
-                // aRenamedColumns = Object.keys(aRecordsOrientationCOPY[0]);
-                // console.log(aPivotInstructions[0]);
-                // console.log(aPivotInstructions[2]);
-                aRenamedColumns = aPivotInstructions[0].concat(aPivotInstructions[2]);
-                // console.log(aRenamedColumns);
 
-                aPivotedData.forEach(function(oEl) {
-                    Object.keys(oEl).forEach(function(oEl0, iIn0) {
-                        if (iIn0 > 0) {
-                            oEl[aRenamedColumns[iIn0]] = oEl[oEl0];
-                            delete oEl[oEl0];
-                        }
+            sToEvalDebugging = 'var oRecordsOrientationGroup = _.groupBy(aRecordsOriented, function(value){ return aPivotInstructions[0].map(function(oElement) { return value[oElement] }).join("#"); });' + "\n" + sToEval;
+
+            if (bDebugging!=null) { // should check both undefined and null
+                return sToEvalDebugging
+            } else {
+                eval(sToEval);
+                // copy(JSON.stringify(aPivotedData))
+                //console.log("oRecordsOrientationGroup = " + JSON.stringify(oRecordsOrientationGroup));
+                //console.log("aColumnsIndexAllCombinations" + JSON.stringify(aColumnsIndexAllCombinations));
+                //console.log(sToEval)
+                
+                if (bReplaceColumnNames) {
+                    // this 3rd parameter (bReplaceColumnNames) only works when there's no more than 1 sAggInstruction AND when there's no columnColumns
+                    // console.log(aRenamedColumns);
+                    // aRenamedColumns = Object.keys(aRecordsOrientationCOPY[0]);
+                    // console.log(aPivotInstructions[0]);
+                    // console.log(aPivotInstructions[2]);
+                    aRenamedColumns = aPivotInstructions[0].concat(aPivotInstructions[2]);
+                    // console.log(aRenamedColumns);
+    
+                    aPivotedData.forEach(function(oEl) {
+                        Object.keys(oEl).forEach(function(oEl0, iIn0) {
+                            if (iIn0 > 0) {
+                                oEl[aRenamedColumns[iIn0]] = oEl[oEl0];
+                                delete oEl[oEl0];
+                            }
+                        })
                     })
-                })
-
+    
+                }
+                return aPivotedData;
             }
-            return aPivotedData;
+            
         } catch(eError) {
             return [eError, sToEval];
         }
@@ -1089,12 +1096,10 @@ pivottable=function(aInputArray, aPivotInstructions, bReplaceColumnNames) {
     return aReturn;
 
 }
-
-
+pivottable.sample = function() { return "copy(pivottable.sample())\n\n\n https://pastebin.com/raw/dxkAMSCE"; }
 
 
 /* END PANDAS-INSPIRED, LODASH-DEPENDENT FUNCTIONS */
-
 
 /* data JMP Tidy.js dplyr and the tidyverse in R */
 
