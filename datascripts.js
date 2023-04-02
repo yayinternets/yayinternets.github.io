@@ -887,6 +887,9 @@ explode = function (aInputArray, aColumns, sDelimiter) {
 
 leftantiArray = function(a,b) { return a.filter(function(item) { return b.indexOf(item) === -1 }) };
 
+
+/* END PANDAS-INSPIRED, LODASH-DEPENDENT FUNCTIONS */
+
 pivottable=function(aInputArray, aPivotInstructions, bReplaceColumnNames, bDebugging) {
     var bIsRO = true; if (isVO(aInputArray)) { aInputArray = toRO(aInputArray); bIsRO = false; };
     aInputArray = normalizeRecordsOriented(aInputArray);
@@ -1097,9 +1100,6 @@ pivottable=function(aInputArray, aPivotInstructions, bReplaceColumnNames, bDebug
 
 }
 pivottable.sample = function() { return "copy(pivottable.sample())\n\n\n https://pastebin.com/raw/dxkAMSCE"; }
-
-
-/* END PANDAS-INSPIRED, LODASH-DEPENDENT FUNCTIONS */
 
 /* data JMP Tidy.js dplyr and the tidyverse in R */
 
