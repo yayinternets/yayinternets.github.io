@@ -426,9 +426,6 @@ function intersect(a, b) {
 }
 intersect.sample = function() { return `intersect([1,"a",2,3], [2,3,4,5, 'a'])`; }
 
-
-
-
 intersperse = function(arr, el) {
     var res = [], i=0;
     if (i < arr.length)
@@ -439,11 +436,14 @@ intersperse = function(arr, el) {
 }
 intersperse.sample=function() { return 'intersperse(["a", "b", "c", "d"], "0");'; }
 
-getRanges = function(aArray) {
+// GOOD = getRanges(), getRange()
+// DEPRECATE range(), getRange3(), getRanges2()
+getRanges = function(aArrayOfInts) {
+  // ASSUMES ints
   // eg getRanges([0,2.1,1,"blah",100,101,2,3,56]) returns ["0-3", "56", "100-101"]
   // converts an array of ints to a list of ranges they are represented by
   uniqueArray=function(arrArg){return arrArg.filter(function(elem,pos,arr){return arr.indexOf(elem)==pos})}
-  aArray = aArray.filter(function(oElement) { return !isNaN(parseInt(oElement)); }).map(function(oElement) { return parseInt(oElement) }).sort(function (a, b) {  return a - b;  });
+  aArray = aArrayOfInts.filter(function(oElement) { return !isNaN(parseInt(oElement)); }).map(function(oElement) { return parseInt(oElement) }).sort(function (a, b) {  return a - b;  });
   aArray = uniqueArray(aArray);
   var ranges = [], rstart, rend;
   for (var i = 0; i < aArray.length; i++) {
