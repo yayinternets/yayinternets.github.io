@@ -1843,7 +1843,11 @@ dom_jsSpreadsheetify = function(data, dom) {
         } else {
             return getRange(0, i-1).map(o=>{ return a[getRandomInt(0,a.length-1)]; });
         }
-    }      
+    }
+	getRandomArrayToken.sample = function() {
+		return "pivottable([['int']].concat(getRange(1,1000).map(o=>[getRandomArrayToken(getRange(1,5))])), '0  0 len', false);\n\ngetRandomArrayToken(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], 3); // fix the bug where it outputs dupes?"
+	}
+
     var animateCSS = (element, animation, prefix = 'animate__') =>
       // We create a Promise and return it
       new Promise((resolve, reject) => {
