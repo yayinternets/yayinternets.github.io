@@ -1099,7 +1099,7 @@ pivottable=function(aInputArray, aPivotInstructions, bReplaceColumnNames, bDebug
     return aReturn;
 
 }
-pivottable.sample = function() { return "copy(pivottable.sample())\n\n\n https://pastebin.com/raw/dxkAMSCE \n\n\n https://pastebin.com/raw/8BeaWrTy"; }
+pivottable.sample = function() { return "copy(pivottable.sample()); \n\n\n eval(pivottable.sample()); \n\n\n https://pastebin.com/raw/QMEwQK9W \n\n\n "; }
 
 /* data JMP Tidy.js dplyr and the tidyverse in R */
 
