@@ -796,9 +796,11 @@ fStringFromCharCode = function() {
 // dom_WordCloudify
 function dom_WordCloudify(aArray, domCanvas) {
     // prereqs: <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js">
+    // eg <canvas id="myCanvas" width="200" height="200" style="border:1px solid">
     // via: https://codepen.io/randyburden/pen/oNqKPPR
     //console.log(domCanvas);
-    // eg: dom_WordCloudify(["nah", "nah", "nah", "nah", "hey", "hey", "hey", "goodbye"], document.getElementById('word-cloud-canvas');
+    // eg: dom_WordCloudify(["nah", "nah", "nah", "nah", "hey", "hey", "hey", "goodbye"], document.getElementById('myCanvas');
+    // eg: dom_WordCloudify(["nah", "nah", "nah", "nah", "hey", "hey", "hey", "goodbye"], $$$$("canvas"));
     const drawWordCloud = () => {
         // const words = [ ["superman", 27], ["batman", 8], ["superhero", 7], ["supergirl", 3], ["lois lane", 7], ["kryptonite", 9], ["wonder woman", 2], ["lex luthor", 5], ["dc comics", 4], ["krypton", 3], ["smallville", 3], ["cape", 2], ["daily planet", 2], ["superboy", 1], ["jor-el", 1], ["metropolis", 3], ["clark kent", 5], ["christopher reeve", 1], ["united states", 1], ["action comics", 1], ["demigod", 1], ["clark", 3], ["superheroes", 3], ["aquaman", 1], ["movie", 1], ["villain", 1], ["cartoon", 1], ["high school", 1], ["supervillain", 1], ["kent", 2], ["spider man", 1], ["comic books", 1], ["marvel comic", 1], ["silver surfer", 1], ["american comic book", 1], ["flash", 1], ["lois", 3], ["super hero", 1], ["justice league", 2], ["captain", 1], ["monster", 1], ["action", 1], ["justice league of america", 2], ["justice", 1], ["invisible man", 1], ["spider-man", 1], ["zod", 2], ["doomsday", 2], ["spiderman", 1], ["homelander", 1], ["lex", 2] ];
         function datascripts_countOccurrences(arr) { // consider refactoring this into datascripts and versus-ing it with a lodash and a pivottable version of this?
