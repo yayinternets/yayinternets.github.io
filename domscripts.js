@@ -793,6 +793,80 @@ fStringFromCharCode = function() {
 
 // dom_LZString,Moment,date-fns_scripts?
 
+// dom_WordCloudify
+function dom_WordCloudify(aArray, domCanvas) {
+    // prereqs: <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js">
+    // via: https://codepen.io/randyburden/pen/oNqKPPR
+    //console.log(domCanvas);
+    // eg: dom_WordCloudify(["nah", "nah", "nah", "nah", "hey", "hey", "hey", "goodbye"], document.getElementById('word-cloud-canvas');
+    const drawWordCloud = () => {
+        // const words = [ ["superman", 27], ["batman", 8], ["superhero", 7], ["supergirl", 3], ["lois lane", 7], ["kryptonite", 9], ["wonder woman", 2], ["lex luthor", 5], ["dc comics", 4], ["krypton", 3], ["smallville", 3], ["cape", 2], ["daily planet", 2], ["superboy", 1], ["jor-el", 1], ["metropolis", 3], ["clark kent", 5], ["christopher reeve", 1], ["united states", 1], ["action comics", 1], ["demigod", 1], ["clark", 3], ["superheroes", 3], ["aquaman", 1], ["movie", 1], ["villain", 1], ["cartoon", 1], ["high school", 1], ["supervillain", 1], ["kent", 2], ["spider man", 1], ["comic books", 1], ["marvel comic", 1], ["silver surfer", 1], ["american comic book", 1], ["flash", 1], ["lois", 3], ["super hero", 1], ["justice league", 2], ["captain", 1], ["monster", 1], ["action", 1], ["justice league of america", 2], ["justice", 1], ["invisible man", 1], ["spider-man", 1], ["zod", 2], ["doomsday", 2], ["spiderman", 1], ["homelander", 1], ["lex", 2] ];
+        function datascripts_countOccurrences(arr) { // consider refactoring this into datascripts and versus-ing it with a lodash and a pivottable version of this?
+            // Example usage:
+            //const inputArray = ["blah", "blah", "yellow", "blue", "red", "yellow"];
+            //const resultArray = countOccurrences(inputArray);
+            //console.log(resultArray);
+            const counts = {};
+            // Count the occurrences of each string
+            arr.forEach(str => {
+                if (counts[str]) {
+                    counts[str]++;
+                } else {
+                    counts[str] = 1;
+                }
+            });
+            // Convert the object into an array of arrays
+            const result = Object.entries(counts);
+            return result;
+        }
+        const words = datascripts_countOccurrences(aArray);
+        // console.log(words);
+
+        if (WordCloud.isSupported) {
+            const wordCloudCanvas = domCanvas; // document.getElementById('word-cloud-canvas');
+            //const wordCloudHtml = document.getElementById('word-cloud-html');
+            const elements = [wordCloudCanvas];
+            const originalWords = words.map(x => ({
+                word: x[0],
+                count: x[1]
+            }));
+            const options = {
+                list: words,
+                gridSize: 10,
+                weightFactor: 8,
+                fontFamily: "sans-serif",
+                color: 'random-dark',
+                rotateRatio: 0,
+                rotationSteps: 2,
+                shape: "circle",
+                ellipticity: 0.6,
+                shrinkToFit: true,
+                minSize: 6,
+                classes: 'word-cloud-item',
+                click: (item, dimension, event) => {
+                    // We lookup the original item to get the accurate count
+                    // because the 'shrinkToFit' option changes the count to fit the word
+                    const originalItem = originalWords.find(x => x.word === item[0]);
+                    alert(`${originalItem.word}: ${originalItem.count}`);
+                },
+            };
+            WordCloud(elements, options);
+
+            // We have to add our own click handler to the HTML-based version
+            // because the library only handles clicks on the canvas-based version
+
+
+        } else {
+            console.log('WordCloud not supported');
+        }
+    };
+
+    // const redrawButton = document.getElementById('redrawButton');
+    // redrawButton.addEventListener('click', drawWordCloud);
+
+    drawWordCloud();
+}
+
 // dom_D3.js_scripts - where charts, graphs, maps, grams and plots reign supreme
 // d3_PieChartify, d3_histogramify, d3_barPlotify, d3_StreamGraphify
 
@@ -800,7 +874,7 @@ fStringFromCharCode = function() {
 
 d3_ridgelinePlotify - 1 old attempt (d3.min.js:2 Uncaught Error: invalid format: ,.-1f)
 d3_TreeMapify - 1 old attempt (d3.hierarchy is not a function)
-d3_Sankeyify - 1 old attempt (was working?)
+d3_Sankeyify - 1 old attempt (was working?), rename to d3_Alluvial?
 d3_CirclePackify - 3 attempts (1 sort-of working)
 
 d3_BubbleChartify
