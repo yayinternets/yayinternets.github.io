@@ -364,6 +364,7 @@ function dom_deconstructDOM(bDebug) {
     // end reduce
     aReturn[0].notes = window.location.href + "\n" + "https://wappalyzer.com/lookup/" + window.location.href + "\n" + "https://builtwith.com/?" + superencode(window.location.href);
     console.log("copy(toTabDelimited(dom_deconstructDOM()))");
+    console.log("maybe refactor the copyRTFHTML code from https://theoryoftheory.github.io/chunkizeTextarea45000.htm into this page?");
     window.open("https://builtwith.com/?" + superencode(window.location.href));
     if (bDebug) {
         return aReturn.map((oo,ii)=>{ return Object.keys(aReturn[ii]).map(o=>aReturn[ii][o].length) });
