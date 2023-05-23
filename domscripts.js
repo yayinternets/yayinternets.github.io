@@ -2653,17 +2653,17 @@ toHTMLSelect=function(aArray, sSelectIDOrClasses, iSelected, bBlank) { // refrac
     // aArray = JSON.parse(JSON.stringify(aArray)); aArray.unshift
     return "<select " + sSelectID + " class='" + sSelectClasses + "'>" + bBlank + aArray.map(function(o,i) { return "<option value='" + superhtmlEntities(o) + "'" + ((iSelected==i) ? " selected": "")+ ">" + superhtmlEntities(o) + "</option>"; }).join("")+"</select>";
 }
-toHTMLTable = function(aArrayOrObject, aColumns, sTableID) {
+toHTMLTable = function(aArrayOrObject, aColumns, sTableID, iTHRows) {
   // refactor the two functions into datascripts
   isRO = function(a) { return (Array.isArray(a) && !Array.isArray(a[0]) ); }; isRecordsOriented = function(a) { return isRO(a); }
   isOSR = function(a) { return (!Array.isArray(a) && a.allcells != undefined); };
 
   if (isVO(aArrayOrObject)) {
-    return convertValuesOrientedToHTMLTable(aArrayOrObject, aColumns, sTableID);
+    return convertValuesOrientedToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows);
   } else if (isOSR(aArrayOrObject)) {
-    return convertOSRToHTMLTable(aArrayOrObject, aColumns, sTableID);
+    return convertOSRToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows);
   } else if (isRO(aArrayOrObject)) {
-    return convertRecordsOrientedArrayToHTMLTable(aArrayOrObject, aColumns, sTableID);
+    return convertRecordsOrientedArrayToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows);
   }
 }
 // refactoring opportunities for returnIDAndOrClasses, convertRecordsOrientedArrayToHTMLTable, and convertValuesOrientedToHTMLTable
@@ -2727,7 +2727,9 @@ convertRecordsOrientedArrayToHTMLTable = function(aRecordsOriented, aColumns, sT
         return sHTMLTable;
 }; convertRecordsOrientedToHTMLTable = function(aRO, aColumns, sTableIDOrClasses) { return convertRecordsOrientedArrayToHTMLTable(aRO, aColumns, sTableIDOrClasses) }
 
-convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTableIDOrClasses) {
+convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTableIDOrClasses, iTHRows) {
+	if (iTHRows!=undefined) {} else { iTHRows = 1; }
+    console.log("iTHRows=" + iTHRows)
     var sTableID = returnIDAndOrClasses(sTableIDOrClasses).id;
     var sTableClasses = (returnIDAndOrClasses(sTableIDOrClasses).classes + " aVO aValuesOriented convertValuesOrientedArrayToHTMLTable convertValuesOrientedToHTMLTable ValuesOrientedArrayToHTML _gsws gsws").trim();
     if (sTableID) { sTableID = " id='" + sTableID + "'"; }
@@ -2741,28 +2743,43 @@ convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTab
     // gsws gsws_SDJOWholeForm A4 gscell columnA row4
     sHTMLTable = "<table " + sTableID + " class='" + sTableClasses + "'" + " style='margin: 0 auto; text-align: center;'>" + aValuesOriented.reduce(function(agg, oElement, iIndex) {
     // sHTMLTable = "<table id='" + sTableID + "' class='convertValuesOrientedToHTMLTable gsws gsws_" + sTableID + "' style='margin: 0 auto; text-align: center;'>" + aValuesOriented.reduce(function(agg, oElement, iIndex) {
-                if (iIndex==0) {
+        if (iIndex==0 && iTHRows==1) {
+        // if (iIndex==iTHRows-1) {
+        // if (iIndex==0) {
           sTHEADBODYBEG = "<thead>";
           sTHEADBODYEND = "</thead>";
+          sTDTH = "th";
+        } else if (iIndex==0 && iTHRows>1) {
+          sTHEADBODYBEG = "<thead>";
+          sTHEADBODYEND = "";
+          sTDTH = "th";
+        } else if (iIndex>0 && iIndex==iTHRows-1) {
+          sTHEADBODYBEG = "";
+          sTHEADBODYEND = "</thead>";
+          sTDTH = "th";
+        } else if (iIndex>0 && iIndex<=iTHRows-1) {
+          sTHEADBODYBEG = "";
+          sTHEADBODYEND = "";
           sTDTH = "th";
         } else {
           sTHEADBODYBEG = "";
           sTHEADBODYEND = "";
           sTDTH = "td";
         }
-              if (iIndex==1) {
+        if (iIndex==iTHRows) {
+        // if (iIndex==1) {
           sTHEADBODYBEG = "<tbody>";
           if (aValuesOriented.length != 2) {
             sTHEADBODYEND = "";
           }
         }
-              if (iIndex==aValuesOriented.length-1 && iIndex!=0) {
+        if (iIndex==aValuesOriented.length-1 && iIndex!=0) {
           if (aValuesOriented.length != 2) {
             sTHEADBODYBEG = "";
           }
           sTHEADBODYEND = "</tbody>";          
         }
-              agg = agg + sTHEADBODYBEG + "<tr>" + oElement.reduce(function(agg000, oElement000, iIndex000) {
+            agg = agg + sTHEADBODYBEG + "<tr>" + oElement.reduce(function(agg000, oElement000, iIndex000) {
             //console.log(oElement);
             var sCell = columnToLetter(iIndex000+1) + (iIndex+1);
             var sClasses = "gsws gscell gsws_" + sTableID + " " + sCell + " row" + (iIndex+1) + " column" + columnToLetter(iIndex000+1) + " cellcolumn" + iIndex000;
@@ -2772,7 +2789,7 @@ convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTab
         return agg;
     }, "") + "</table>";
     return sHTMLTable.replace(/ id=''/g, "");
-}; convertValuesOrientedToHTMLTable = function(aVO, aColumns, sTableIDOrClasses) { return convertValuesOrientedArrayToHTMLTable(aVO, aColumns, sTableIDOrClasses) }
+}; convertValuesOrientedToHTMLTable = function(aVO, aColumns, sTableIDOrClasses, iTHRows) { return convertValuesOrientedArrayToHTMLTable(aVO, aColumns, sTableIDOrClasses, iTHRows) }
 
 convertRecordsOrientedArrayToExcelXML = function(aArray, aColumns) {
   // convertRecordsOrientedArrayToExcelXML
