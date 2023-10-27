@@ -1,3 +1,18 @@
+// 2023 unorganized
+
+// HTMLTABLE TO GOOGLESHEETS DELIMITED COPY-PASTEABLE TABLE: 
+function convertDomTableToGooglesheetsPasteableText(domTable) {
+   // replace domTable code with your particular table target
+   // domTable = document.querySelectorAll("table")[0];
+   // now copy domTable into googlesheets-friendly tab delimited text
+return Array.from(domTable.querySelectorAll("tr")).map(o=>(Array.from(o.querySelectorAll("td")).map(oo=>oo.innerHTML.replaceAll("\n", "¶")))).reduce(function(a,e,i) { a = a + "\n" + e.join("\t"); return a; }, "").trim();
+   /*
+   domTable = document.querySelectorAll("table")[0];
+   copy(convertDomTableToGooglesheetsPasteableText(domTable));
+   */
+}
+
+
 // 2022 "meta-dom" functions - dom_modalize_img_tags,dom_li_paginate, dom_li_paginate_fadeGroup, dom_changeTitleAndFavicon, dom_addImageOverlays, dom_deconstructDOM, dom_load_library
 function dom_modalize_img_tags() {
     // solution from codepen https://codepen.io/RileyB/pen/XQyaXy
