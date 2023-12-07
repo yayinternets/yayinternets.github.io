@@ -1,4 +1,4 @@
-// 2023 unorganized
+// dom_2023 unorganized
 function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, iTDHeight) {
     // eg domLoadStyles_CSS(domAutomateTableWidth(1830, [0,0,0,50,0,0,0,0], null, 25));
     // this function is necessary because apparently there's no way in css to make a table with a predefined width automatically adjust its tds/columns to be the sum of the table's width without explicitly defining the column widths AND table widths
@@ -17,10 +17,10 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
             o = (iTableWidth-iPadding)*(o/100);
             // o = (iTableWidth)*(o/100);
         } else {
-            o = ((iTotalPercentageRemaining * (iTableWidth-iPadding) / 100)/iTotalEquidistantCols).toFixed(2);
+            o = ((iTotalPercentageRemaining * (iTableWidth-iPadding) / 100)/iTotalEquidistantCols);
             // o = ((iTotalPercentageRemaining * (iTableWidth) / 100)/iTotalEquidistantCols).toFixed(2);
         }
-        return parseFloat(o);
+        return parseFloat(o).toFixed(2);
     })
     // QA/QC - is sum of aActualColsWidths < iTableWidth?
     // console.log(aActualColsWidths);
@@ -89,7 +89,7 @@ return Array.from(domTable.querySelectorAll("tr")).map(o=>(Array.from(o.querySel
 }
 
 
-// 2022 "meta-dom" functions - dom_modalize_img_tags,dom_li_paginate, dom_li_paginate_fadeGroup, dom_changeTitleAndFavicon, dom_addImageOverlays, dom_deconstructDOM, dom_load_library
+// dom_2022 "meta-dom" functions - dom_modalize_img_tags,dom_li_paginate, dom_li_paginate_fadeGroup, dom_changeTitleAndFavicon, dom_addImageOverlays, dom_deconstructDOM, dom_load_library
 function dom_modalize_img_tags() {
     // solution from codepen https://codepen.io/RileyB/pen/XQyaXy
     // prereqs: in your HTML just surround the img elements with <span class="image-modal-content"><img ></span>;
@@ -487,7 +487,7 @@ function dom_load_library(sLibrary, bDisplaySample) {
 
 
 
-// 2022 reset2 editors ace vs codeMirror
+// dom_2022 reset2 editors ace vs codeMirror
 
 function editor_ace_ify(e) {
     // function editor_codeMirror_ify(e) {}
@@ -2819,7 +2819,7 @@ convertRecordsOrientedArrayToHTMLTable = function(aRecordsOriented, aColumns, sT
 }; convertRecordsOrientedToHTMLTable = function(aRO, aColumns, sTableIDOrClasses) { return convertRecordsOrientedArrayToHTMLTable(aRO, aColumns, sTableIDOrClasses) }
 
 convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTableIDOrClasses, iTHRows) {
-	if (iTHRows!=undefined) {} else { iTHRows = 1; }
+        if (iTHRows!=undefined) {} else { iTHRows = 1; }
     console.log("iTHRows=" + iTHRows)
     var sTableID = returnIDAndOrClasses(sTableIDOrClasses).id;
     var sTableClasses = (returnIDAndOrClasses(sTableIDOrClasses).classes + " aVO aValuesOriented convertValuesOrientedArrayToHTMLTable convertValuesOrientedToHTMLTable ValuesOrientedArrayToHTML _gsws gsws").trim();
