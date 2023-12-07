@@ -30,7 +30,7 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
     }).join(""); // 30 is kinda random to account for margins/padding in table or something?
 
     var sTableStyleAssumptions = "border-collapse: collapse; margin: auto; border: 3px solid black; overflow: auto; table-layout: fixed; ";
-    var sTDStyleAssumptions = "border-style: dashed; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: 25px; ";
+    var sTDStyleAssumptions = "border-style: dashed; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: " + iTDHeight + "px; "; // note how td's padding-bottom and height are the exact same;
     // return "<style> table { width: " + iTableWidth + "px; } " + sTDStyle + "</style>";
     return "table { " + sTableStyleAssumptions + " width: " + iTableWidth + `px; }\ntd { ${sTDStyleAssumptions} height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
 
