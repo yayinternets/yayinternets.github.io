@@ -7,18 +7,18 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
     // if no sTableIDorClass then default style to target all tables ie "table"
     // eg aColsWidths = [0,0,0,50,0,0,0,0];
     if (iTDHeight) {} else { iTDHeight = 150; }
-    iPadding = 70; // if cells are spilling into next row then adjust this number as necessary
     iNumOfCols = aColsWidths.length;
+    iPadding = 5 * iNumOfCols; // "border-style: dashed;" on the tds apparently creates a ghost padding of 5px, so I need to account for this in total table width and individual column width.  (if cells are spilling into next row then parameterized then adjust this number as necessary)
     iTotalPercentageRemaining = 100 - aColsWidths.reduce((a,e,i)=>{ return a+e }, 0)
     iTotalEquidistantCols = aColsWidths.reduce((a,e,i)=>{ if (e==0) { return a+1; } else { return a; } }, 0);
     console.log(iTotalPercentageRemaining);
     aActualColsWidths = aColsWidths.map((o,i)=>{
         if (o!=0) {
-            // o = (iTableWidth-iPadding)*(o/100);
-            o = (iTableWidth)*(o/100);
+            o = (iTableWidth-iPadding)*(o/100);
+            // o = (iTableWidth)*(o/100);
         } else {
-            // o = ((iTotalPercentageRemaining * (iTableWidth-iPadding) / 100)/iTotalEquidistantCols).toFixed(2);
-            o = ((iTotalPercentageRemaining * (iTableWidth) / 100)/iTotalEquidistantCols).toFixed(2);
+            o = ((iTotalPercentageRemaining * (iTableWidth-iPadding) / 100)/iTotalEquidistantCols).toFixed(2);
+            // o = ((iTotalPercentageRemaining * (iTableWidth) / 100)/iTotalEquidistantCols).toFixed(2);
         }
         return parseFloat(o);
     })
@@ -33,7 +33,7 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
     }).join(""); // 30 is kinda random to account for margins/padding in table or something?
 
     var sTableStyleAssumptions = "border-collapse: collapse; margin: auto; border: 0px solid black; overflow: auto; table-layout: fixed; ";
-    var sTDStyleAssumptions = "border-style: dashed; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: " + iTDHeight + "px; "; // note how td's padding-bottom and height are the exact same;
+    var sTDStyleAssumptions = "border-style: dashed; padding-left: 0px; padding-right: 0px; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: " + iTDHeight + "px; "; // note how td's padding-bottom and height are the exact same;
     // return "<style> table { width: " + iTableWidth + "px; } " + sTDStyle + "</style>";
     return "table { " + sTableStyleAssumptions + " width: " + iTableWidth + `px; }\ntd { ${sTDStyleAssumptions} height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
    /*
