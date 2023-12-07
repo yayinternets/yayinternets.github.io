@@ -34,10 +34,24 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
     var sTDStyleAssumptions = "border-style: dashed; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: " + iTDHeight + "px; "; // note how td's padding-bottom and height are the exact same;
     // return "<style> table { width: " + iTableWidth + "px; } " + sTDStyle + "</style>";
     return "table { " + sTableStyleAssumptions + " width: " + iTableWidth + `px; }\ntd { ${sTDStyleAssumptions} height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
+   /*
+Another option is to employ a CSS grid layout. This provides even more flexibility in controlling the layout of your table. Here's an example:
 
+table {
+  border-collapse: collapse;
+  margin: auto;
+  border: 3px solid black;
+  overflow: auto;
+  table-layout: fixed;
+  width: 850px;
+  display: grid;
+  grid-template-columns: 166px 415px 249px;
+  grid-auto-rows: 30px;
+}
+*/
 }
 
-function domscripts_linkify(inputText) {
+function domscripts_linkify(inputText) { // refactor with profilicities' dom_convertAllURLsToAhrefs() function?
     
     var replacedText, replacePattern1, replacePattern2, replacePattern3;
 
