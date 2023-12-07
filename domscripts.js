@@ -1,11 +1,11 @@
 // 2023 unorganized
 function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, iTDHeight) {
-    // eg domAutomateTableWidth(1830, [0,0,0,50,0,0,0,0]);
+    // eg domLoadStyles_CSS(domAutomateTableWidth(1830, [0,0,0,50,0,0,0,0], null, 25));
     // this function is necessary because apparently there's no way in css to make a table with a predefined width automatically adjust its tds/columns to be the sum of the table's width without explicitly defining the column widths AND table widths
     // aColsWidths is an array of percentages, if 0 then it defaults to equidistant
     // if no aColsWidth, then default to ALL equidistant tds
     // if no sTableIDorClass then default style to target all tables ie "table"
-    // aColsWidths = [0,0,0,50,0,0,0,0];
+    // eg aColsWidths = [0,0,0,50,0,0,0,0];
     if (iTDHeight) {} else { iTDHeight = 150; }
     iPadding = 70; // if cells are spilling into next row then adjust this number as necessary
     iNumOfCols = aColsWidths.length;
@@ -14,9 +14,11 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
     console.log(iTotalPercentageRemaining);
     aActualColsWidths = aColsWidths.map((o,i)=>{
         if (o!=0) {
-            o = (iTableWidth-iPadding)*(o/100);
+            // o = (iTableWidth-iPadding)*(o/100);
+            o = (iTableWidth)*(o/100);
         } else {
-            o = ((iTotalPercentageRemaining * (iTableWidth-iPadding) / 100)/iTotalEquidistantCols).toFixed(2);
+            // o = ((iTotalPercentageRemaining * (iTableWidth-iPadding) / 100)/iTotalEquidistantCols).toFixed(2);
+            o = ((iTotalPercentageRemaining * (iTableWidth) / 100)/iTotalEquidistantCols).toFixed(2);
         }
         return parseFloat(o);
     })
@@ -30,7 +32,7 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
         // return `td:nth-child(${i+1}) { width: ${o}px; height: ${iTDHeight}px;}\n`
     }).join(""); // 30 is kinda random to account for margins/padding in table or something?
 
-    var sTableStyleAssumptions = "border-collapse: collapse; margin: auto; border: 3px solid black; overflow: auto; table-layout: fixed; ";
+    var sTableStyleAssumptions = "border-collapse: collapse; margin: auto; border: 0px solid black; overflow: auto; table-layout: fixed; ";
     var sTDStyleAssumptions = "border-style: dashed; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: " + iTDHeight + "px; "; // note how td's padding-bottom and height are the exact same;
     // return "<style> table { width: " + iTableWidth + "px; } " + sTDStyle + "</style>";
     return "table { " + sTableStyleAssumptions + " width: " + iTableWidth + `px; }\ntd { ${sTDStyleAssumptions} height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
@@ -40,7 +42,7 @@ Another option is to employ a CSS grid layout. This provides even more flexibili
 table {
   border-collapse: collapse;
   margin: auto;
-  border: 3px solid black;
+  border: 0px solid black;
   overflow: auto;
   table-layout: fixed;
   width: 850px;
