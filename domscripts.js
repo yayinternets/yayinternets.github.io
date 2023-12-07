@@ -43,7 +43,7 @@ function convertDomTableToGooglesheetsPasteableText(domTable) {
    // replace domTable code with your particular table target
    // domTable = document.querySelectorAll("table")[0];
    // now copy domTable into googlesheets-friendly tab delimited text
-return Array.from(domTable.querySelectorAll("tr")).map(o=>(Array.from(o.querySelectorAll("td")).map(oo=>oo.innerHTML.replaceAll("\n", "¶")))).reduce(function(a,e,i) { a = a + "\n" + e.join("\t"); return a; }, "").trim();
+return Array.from(domTable.querySelectorAll("tr")).map(o=>(Array.from(o.querySelectorAll("th,td")).map(oo=>oo.innerHTML.replaceAll("\n", "¶")))).reduce(function(a,e,i) { a = a + "\n" + e.join("\t"); return a; }, "").trim();
    /*
    domTable = document.querySelectorAll("table")[0];
    copy(convertDomTableToGooglesheetsPasteableText(domTable));
