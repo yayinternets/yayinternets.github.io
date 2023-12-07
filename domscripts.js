@@ -28,9 +28,11 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
         return `td:nth-child(${i+1}) { width: ${o}px; }\n`
         // return `td:nth-child(${i+1}) { width: ${o}px; height: ${iTDHeight}px;}\n`
     }).join(""); // 30 is kinda random to account for margins/padding in table or something?
-    
+
+    var sTableStyleAssumptions = "border-collapse: collapse; margin: auto; border: 3px solid black; overflow: auto; table-layout: fixed; ";
+    var sTDStyleAssumptions = "border-style: dashed; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: 25px; ";
     // return "<style> table { width: " + iTableWidth + "px; } " + sTDStyle + "</style>";
-    return "table { border-collapse: collapse; margin: auto; border: 3px solid black; overflow: auto; table-layout: fixed; width: " + iTableWidth + `px; }\ntd { border-style: dashed; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: 25px; height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
+    return "table { " + sTableStyleAssumptions + " width: " + iTableWidth + `px; }\ntd { ${sTDStyleAssumptions} height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
 
 }
 
