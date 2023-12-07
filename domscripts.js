@@ -35,7 +35,8 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
     var sTableStyleAssumptions = "border-collapse: collapse; margin: auto; border: 0px solid black; overflow: auto; table-layout: fixed; ";
     var sTDStyleAssumptions = "border-style: dashed; padding-left: 0px; padding-right: 0px; border-color: black; white-space: nowrap; overflow: scroll; padding-bottom: " + iTDHeight + "px; "; // note how td's padding-bottom and height are the exact same;
     // return "<style> table { width: " + iTableWidth + "px; } " + sTDStyle + "</style>";
-    return "table { " + sTableStyleAssumptions + " width: " + iTableWidth + `px; }\ntd { ${sTDStyleAssumptions} height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
+    var sComment = "\n/* style from domGenerateTableAndTDWidth() function */\n\n";
+    return sComment + "table { " + sTableStyleAssumptions + " width: " + iTableWidth + `px; }\ntd { ${sTDStyleAssumptions} height: ${iTDHeight}px; float: left; }\n` + sTDStyle + "";
    /*
 Another option is to employ a CSS grid layout. This provides even more flexibility in controlling the layout of your table. Here's an example:
 
