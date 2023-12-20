@@ -2791,7 +2791,7 @@ convertRecordsOrientedArrayToHTMLTable = function(aRecordsOriented, aColumns, sT
     var sRawTableID = ""; // consider refactoring this redundant variable out?
     if (sTableID) { sRawTableID = sTableID; sTableID = " id='" + sTableID + "'"; }
     
-    console.log(sRawTableID);
+    // console.log(sRawTableID);
     // convertRecordsOrientedArrayToHTMLTable(aRecordsOriented)
     function returnAllKeysAmongAllObjectsInRecordsOrientedArray(aRecordsOriented) { return aRecordsOriented.reduce(function(agg, oElement313) { agg = agg.concat(Object.keys(oElement313)); agg = unique(agg); return agg; }, []) }
     if (aColumns == undefined) {
@@ -2822,7 +2822,7 @@ convertRecordsOrientedArrayToHTMLTable = function(aRecordsOriented, aColumns, sT
 convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTableIDOrClasses, iTHRows, sLineBreak) {
     if (sLineBreak!=undefined) {} else { sLineBreak = "<br>"; }
     if (iTHRows!=undefined) {} else { iTHRows = 1; }
-    console.log("iTHRows=" + iTHRows)
+    // console.log("iTHRows=" + iTHRows)
     var sTableID = returnIDAndOrClasses(sTableIDOrClasses).id;
     var sTableClasses = (returnIDAndOrClasses(sTableIDOrClasses).classes + " aVO aValuesOriented convertValuesOrientedArrayToHTMLTable convertValuesOrientedToHTMLTable ValuesOrientedArrayToHTML _gsws gsws").trim();
     if (sTableID) { sTableID = " id='" + sTableID + "'"; }
