@@ -1,4 +1,22 @@
 // dom_2023 unorganized
+function dom_copyHTMLToClipboard(sHTML) {
+  // utilitzes navigator.clipboard.write for both html and plaintext
+  // no <style> tags in html allowed: only inline-styles!
+    var data = [new ClipboardItem({
+      ["text/html"]: new Blob([sHTML], { type: "text/html" }),
+      ["text/plain"]: new Blob([sHTML], { type: "text/plain" })
+    })];
+
+    navigator.clipboard.write(data).then(
+      () => {
+        alert("successful navigator.clipboard.write of ClipboardItem with both text/html and text/plain Blobs.");    
+      },
+      (err) => {
+        alert(`Error: ${err.name} - ${err.message}`);
+      }
+    );  
+}
+
 function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, iTDHeight) {
     // eg domLoadStyles_CSS(domAutomateTableWidth(1830, [0,0,0,50,0,0,0,0], null, 25));
     // this function is necessary because apparently there's no way in css to make a table with a predefined width automatically adjust its tds/columns to be the sum of the table's width without explicitly defining the column widths AND table widths
