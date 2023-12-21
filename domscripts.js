@@ -17,7 +17,7 @@ function dom_copyHTMLToClipboard(sHTML) {
     );  
 }
 
-function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, iTDHeight) {
+function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, iTDHeight, iPaddingMore) {
     // eg domLoadStyles_CSS(domAutomateTableWidth(1830, [0,0,0,50,0,0,0,0], null, 25));
     // this function is necessary because apparently there's no way in css to make a table with a predefined width automatically adjust its tds/columns to be the sum of the table's width without explicitly defining the column widths AND table widths
     // aColsWidths is an array of percentages, if 0 then it defaults to equidistant
@@ -26,7 +26,9 @@ function domGenerateTableAndTDWidth(iTableWidth, aColsWidths, sTableIDorClass, i
     // eg aColsWidths = [0,0,0,50,0,0,0,0];
     if (iTDHeight) {} else { iTDHeight = 150; }
     iNumOfCols = aColsWidths.length;
-    iPadding = 3 * iNumOfCols; // "border-style: dashed;" on the tds apparently creates a ghost padding of 3px, so I need to account for this in total table width and individual column width.  (if you see cells are spilling into next row then parameterized then adjust this number as necessary);;;also I had to change table's "border: 1px solid black;" to "border: 0px solid black;", consider changing it back to 1px to help troubleshoot/visualize where future overflows are taking place if necessary
+  	// adding in iPaddingMore to domGenerateTableAndTDWidth() as fifth parameter because on samsung fold the table is too narrow for some reason
+    if (iPaddingMore) {} else { iPaddingMore = 0; }
+    iPadding = 3 * iNumOfCols + iPaddingMore; // "border-style: dashed;" on the tds apparently creates a ghost padding of 3px, so I need to account for this in total table width and individual column width.  (if you see cells are spilling into next row then parameterized then adjust this number as necessary);;;also I had to change table's "border: 1px solid black;" to "border: 0px solid black;", consider changing it back to 1px to help troubleshoot/visualize where future overflows are taking place if necessary
     iTotalPercentageRemaining = 100 - aColsWidths.reduce((a,e,i)=>{ return a+e }, 0)
     iTotalEquidistantCols = aColsWidths.reduce((a,e,i)=>{ if (e==0) { return a+1; } else { return a; } }, 0);
     console.log(iTotalPercentageRemaining);
