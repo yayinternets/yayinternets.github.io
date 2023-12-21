@@ -2762,17 +2762,17 @@ toHTMLSelect=function(aArray, sSelectIDOrClasses, iSelected, bBlank) { // refrac
     // aArray = JSON.parse(JSON.stringify(aArray)); aArray.unshift
     return "<select " + sSelectID + " class='" + sSelectClasses + "'>" + bBlank + aArray.map(function(o,i) { return "<option value='" + superhtmlEntities(o) + "'" + ((iSelected==i) ? " selected": "")+ ">" + superhtmlEntities(o) + "</option>"; }).join("")+"</select>";
 }
-toHTMLTable = function(aArrayOrObject, aColumns, sTableID, iTHRows) {
+toHTMLTable = function(aArrayOrObject, aColumns, sTableID, iTHRows, sLineBreak, bAdd_GSDS_Classes) {
   // refactor the two functions into datascripts
   isRO = function(a) { return (Array.isArray(a) && !Array.isArray(a[0]) ); }; isRecordsOriented = function(a) { return isRO(a); }
   isOSR = function(a) { return (!Array.isArray(a) && a.allcells != undefined); };
 
   if (isVO(aArrayOrObject)) {
-    return convertValuesOrientedToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows);
+    return convertValuesOrientedToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows, sLineBreak, bAdd_GSDS_Classes);
   } else if (isOSR(aArrayOrObject)) {
-    return convertOSRToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows);
+    return convertOSRToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows, sLineBreak, bAdd_GSDS_Classes);
   } else if (isRO(aArrayOrObject)) {
-    return convertRecordsOrientedArrayToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows);
+    return convertRecordsOrientedArrayToHTMLTable(aArrayOrObject, aColumns, sTableID, iTHRows, sLineBreak, bAdd_GSDS_Classes);
   }
 }
 // refactoring opportunities for returnIDAndOrClasses, convertRecordsOrientedArrayToHTMLTable, and convertValuesOrientedToHTMLTable
@@ -2801,7 +2801,7 @@ returnIDAndOrClasses = function(sIDAndOrClasses) {
 // returnIDAndOrClasses("#blah.testing_12.hello.wat");
 // returnIDAndOrClasses("blah");
 // returnIDAndOrClasses(".blah# blah2");
-convertRecordsOrientedArrayToHTMLTable = function(aRecordsOriented, aColumns, sTableIDOrClasses, sLineBreak) {
+convertRecordsOrientedArrayToHTMLTable = function(aRecordsOriented, aColumns, sTableIDOrClasses, sLineBreak, bAdd_GSDS_Classes) {
     if (sLineBreak!=undefined) {} else { sLineBreak = "<br>"; }
     // sTableID = "#blah.testing_12.hello"; sTableID = "asdfasf";
     var sTableID = returnIDAndOrClasses(sTableIDOrClasses).id;
@@ -2835,14 +2835,14 @@ convertRecordsOrientedArrayToHTMLTable = function(aRecordsOriented, aColumns, sT
         }, "") + "</tr></thead><tbody>"
     ) + "</tbody></table>";
         return sHTMLTable;
-}; convertRecordsOrientedToHTMLTable = function(aRO, aColumns, sTableIDOrClasses, sLineBreak) { return convertRecordsOrientedArrayToHTMLTable(aRO, aColumns, sTableIDOrClasses, sLineBreak) }
+}; convertRecordsOrientedToHTMLTable = function(aRO, aColumns, sTableIDOrClasses, sLineBreak, bAdd_GSDS_Classes) { return convertRecordsOrientedArrayToHTMLTable(aRO, aColumns, sTableIDOrClasses, sLineBreak) }
 
-convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTableIDOrClasses, iTHRows, sLineBreak) {
+convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTableIDOrClasses, iTHRows, sLineBreak, bAdd_GSDS_Classes) {
     if (sLineBreak!=undefined) {} else { sLineBreak = "<br>"; }
     if (iTHRows!=undefined) {} else { iTHRows = 1; }
     // console.log("iTHRows=" + iTHRows)
     var sTableID = returnIDAndOrClasses(sTableIDOrClasses).id;
-    var sTableClasses = (returnIDAndOrClasses(sTableIDOrClasses).classes + " aVO aValuesOriented convertValuesOrientedArrayToHTMLTable convertValuesOrientedToHTMLTable ValuesOrientedArrayToHTML _gsws gsws").trim();
+    var sTableClasses = (returnIDAndOrClasses(sTableIDOrClasses).classes + (bAdd_GSDS_Classes ? " aVO aValuesOriented convertValuesOrientedArrayToHTMLTable convertValuesOrientedToHTMLTable ValuesOrientedArrayToHTML _gsws gsws" : "")).trim();
     if (sTableID) { sTableID = " id='" + sTableID + "'"; }
     /// convertValuesOrientedToHTMLTable([[1,2,3,4],[0,0,0,0],[9,9,9,9]], undefined, "gswsvo")
     function returnAllKeysAmongAllObjectsInRecordsOrientedArray(aRecordsOriented) { return aRecordsOriented.reduce(function(agg, oElement313) { agg = agg.concat(Object.keys(oElement313)); agg = unique(agg); return agg; }, []) }
@@ -2852,7 +2852,7 @@ convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTab
                  // aColumns = returnAllKeysAmongAllObjectsInRecordsOrientedArray(aRecordsOriented);
     }
     // gsws gsws_SDJOWholeForm A4 gscell columnA row4
-    sHTMLTable = "<table " + sTableID + " class='" + sTableClasses + "'" + " style='margin: 0 auto; text-align: center;'>" + aValuesOriented.reduce(function(agg, oElement, iIndex) {
+    sHTMLTable = "<table " + sTableID + " class='" + sTableClasses + "'" + (bAdd_GSDS_Classes ? " style='margin: 0 auto; text-align: center;'>" : "") + aValuesOriented.reduce(function(agg, oElement, iIndex) {
     // sHTMLTable = "<table id='" + sTableID + "' class='convertValuesOrientedToHTMLTable gsws gsws_" + sTableID + "' style='margin: 0 auto; text-align: center;'>" + aValuesOriented.reduce(function(agg, oElement, iIndex) {
         if (iIndex==0 && iTHRows==1) {
         // if (iIndex==iTHRows-1) {
@@ -2894,13 +2894,13 @@ convertValuesOrientedArrayToHTMLTable = function(aValuesOriented, aColumns, sTab
             //console.log(oElement);
             var sCell = columnToLetter(iIndex000+1) + (iIndex+1);
             var sClasses = "gsws gscell gsws_" + sTableID + " " + sCell.replaceAll() + " row" + (iIndex+1) + " column" + columnToLetter(iIndex000+1) + " cellcolumn" + iIndex000;
-            agg000 = agg000 + "<" + sTDTH + " title='" + sCell + "' class='" + sClasses + "'>" + oElement000.replaceAll("\n", sLineBreak) + "</" + sTDTH + ">"; // style='text-align:left'
+            agg000 = agg000 + "<" + sTDTH + " title='" + sCell + "' class='" + (bAdd_GSDS_Classes ? sClasses : "") + "'>" + oElement000.replaceAll("\n", sLineBreak) + "</" + sTDTH + ">"; // style='text-align:left'
             return agg000;
         }, "") + "</tr>" + sTHEADBODYEND;
         return agg;
     }, "") + "</table>";
     return sHTMLTable.replace(/ id=''/g, "");
-}; convertValuesOrientedToHTMLTable = function(aVO, aColumns, sTableIDOrClasses, iTHRows, sLineBreak) { return convertValuesOrientedArrayToHTMLTable(aVO, aColumns, sTableIDOrClasses, iTHRows, sLineBreak) }
+}; convertValuesOrientedToHTMLTable = function(aVO, aColumns, sTableIDOrClasses, iTHRows, sLineBreak, bAdd_GSDS_Classes) { return convertValuesOrientedArrayToHTMLTable(aVO, aColumns, sTableIDOrClasses, iTHRows, sLineBreak) }
 
 convertRecordsOrientedArrayToExcelXML = function(aArray, aColumns) {
   // convertRecordsOrientedArrayToExcelXML
