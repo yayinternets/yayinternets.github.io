@@ -1,6 +1,12 @@
 // dom_2023 unorganized
-function dom_makeImgAltsHoverableText(sColor, sBGColor, iFontSize) {
+function dom_makeImgAltsHoverableText(sColor, sBGColor, iScale, iFontSize) {
     // via https://jsfiddle.net/joplomacedo/5cL31o0g/
+    if (sBGColor) {} else {sBGColor = "rgba(36, 62, 206, 0.6)"; }
+    if (sColor) {} else {sColor = "#fff"; }
+    if (iScale) {} else {iFontSize = "1"; }
+    if (iFontSize) {} else {iFontSize = "4"; }
+
+
     domLoadStyles_CSS(`.img__wrap {
       position: relative;
       display: inline-block;
@@ -31,6 +37,7 @@ function dom_makeImgAltsHoverableText(sColor, sBGColor, iFontSize) {
     .img__wrap:hover .img__description_layer {
       visibility: visible;
       opacity: 1;
+      transform: scale(${iScale});
     }
     
     .img__description {
@@ -42,9 +49,7 @@ function dom_makeImgAltsHoverableText(sColor, sBGColor, iFontSize) {
     .img__wrap:hover .img__description {
       transform: translateY(0);
     }`);
-    if (sBGColor) {} else {sBGColor = "rgba(36, 62, 206, 0.6)"; }
-    if (sColor) {} else {sColor = "#fff"; }
-    if (iFontSize) {} else {iFontSize = "4"; }
+
     
     document.querySelectorAll('img[alt]').forEach(o=>{
         o.className = "img__img";
