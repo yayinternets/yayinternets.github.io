@@ -2725,7 +2725,7 @@ function HTMLLibrarify (sHeadList) { // HTMLLibrarify is essentially a <script s
         .map(e => ((e.match(/\.js$/) ? `<script src="${e}"></script>`: `<link rel="stylesheet" href="${e}" type="text/css" />`)))
         .join("\n"); 
 }
-function HTMLInjecify(sHeadList) { // HTMLInjectify() is essentially a smart wrapper for domLoadStyles_Link() and domLoadScripts_Link(), refactor to allow domLoadScripts_SCRIPT() and domLoadStyles_CSS() too?
+function HTMLInjectify(sHeadList) { // HTMLInjectify() is essentially a smart wrapper for domLoadStyles_Link() and domLoadScripts_Link(), refactor to allow domLoadScripts_SCRIPT() and domLoadStyles_CSS() too?
   // eg HTMLInjecify("https://manueldelanda.github.io/datascripts.js;https://manueldelanda.github.io/domscripts.js;https://cdn.jsdelivr.net/lodash/4/lodash.min.js;https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css;https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css")
   // The following sScripts variable is minified scripts from domscripts nobrainer section
   var sScripts = `domLoadStyles_Link=function(t){Array.isArray(t)||(t=[t]),t.forEach(function(t){var e=document.getElementsByTagName("head")[0],r=document.createElement("link");r.setAttribute("rel","stylesheet"),r.setAttribute("type","text/css"),r.setAttribute("href",t),e.appendChild(r)})},domLoadScripts_Link=function(t){Array.isArray(t)||(t=[t]),t.forEach(function(t){var e=document.getElementsByTagName("head")[0],r=document.createElement("script");r.setAttribute("src",t.trim()),e.appendChild(r)})};`
