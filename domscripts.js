@@ -42,13 +42,13 @@ function dom_makeImgAltsHoverableText(sColor, sBGColor, iFontSize) {
     .img__wrap:hover .img__description {
       transform: translateY(0);
     }`);
-    if (sBGColor) {} else {sBGColor = "rgba(36, 62, 206, 0.6)" }
-    if (sColor) {} else {sColor = "#fff" }
-    if (iFontSize) {} else {iFontSize = "4" }
+    if (sBGColor) {} else {sBGColor = "rgba(36, 62, 206, 0.6)"; }
+    if (sColor) {} else {sColor = "#fff"; }
+    if (iFontSize) {} else {iFontSize = "4"; }
     
     document.querySelectorAll('img[alt]').forEach(o=>{
         o.className = "img__img";
-        o.outerHTML = `<div class="img__wrap">` + o.outerHTML + `<div class="img__description_layer" style="background: `${sBGColor}`; color: `${sColor}; font-size: `${iFontSize}`px; `"><p class="img__description">` + o.alt + `</p></div>`;
+        o.outerHTML = `<div class="img__wrap">` + o.outerHTML + `<div class="img__description_layer" style="background: ${sBGColor}; color: ${sColor}; font-size: ${iFontSize}px;"><p class="img__description">` + o.alt + `</p></div>`;
         
     })
 }
