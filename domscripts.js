@@ -1,4 +1,10 @@
 // dom_2023 unorganized
+function dom_displayTDContents(oElement) {
+    const tdContent = oElement.innerHTML;
+    const newWindow = window.open("", "newWindow", "width=500,height=500");
+    newWindow.document.write(tdContent);
+}
+
 function dom_makeImgAltsHoverableText(sColor, sBGColor, iScale, iFontSize) {
     // via https://jsfiddle.net/joplomacedo/5cL31o0g/
     if (sBGColor) {} else {sBGColor = "rgba(36, 62, 206, 0.6)"; }
