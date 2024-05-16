@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400, 300, 600, 700);
+
+
 /* .retrofont */
 /* https://youtu.be/yeCQW9S81PI */
 
@@ -12,7 +15,6 @@
     -webkit-text-stroke-color: #f110de;
     text-shadow: -6px 6px #f1ed10, -15px 10px cyan;
 }/* BUTTONS - responsive, colored buttons*/
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400, 300, 600, 700);
 
  .btn {
     font-family: "Open Sans", sans-serif;
