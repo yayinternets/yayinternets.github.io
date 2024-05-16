@@ -1,4 +1,17 @@
-/* BUTTONS - responsive, colored buttons*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
+/* .retrofont */
+/* https://youtu.be/yeCQW9S81PI */
+
+.retrofont {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-size:100px;
+    letter-spacing:15px;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: #f110de;
+    text-shadow: -6px 6px #f1ed10, -15px 10px cyan;
+}/* BUTTONS - responsive, colored buttons*/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400, 300, 600, 700);
 
  .btn {
@@ -87,8 +100,6 @@
     color: black;
     background-color: #15E2BF;
 }
-
-
 
 /* BUTTONS - .minesweeper, .windows00, .windows95 */
 
@@ -241,9 +252,7 @@
     border: 2px solid #447dbc;        
     -webkit-box-shadow: rgba(66, 140, 240, 0.4) 0px 10px 16px;
     -moz-box-shadow: rgba(66, 140, 240, 0.4) 0px 10px 16px; 
-}
-
-/* <p> styles: superp, etc */
+}/* <p> styles: superp, etc */
 .superp {
   margin-top: 2.5rem;
   line-height: 1.6rem;
@@ -262,9 +271,7 @@
 
 .superp:first-line {
   font-family: Montserrat, sans-serif;
-}
-
-/* <textarea> */
+}/* <textarea> */
 
 .awesometextarea {
   margin: auto;
@@ -288,8 +295,6 @@
   padding: 5px 8px;
   transition: background-color 0.2s ease 0s;
 }
-
-
 /* .hovergrow effect */
 
 .hovergrow {
@@ -297,32 +302,13 @@
 }
 .hovergrow:hover {
   transform: scale(2.5);
-}
-
-/* .retrofont */
-/* https://youtu.be/yeCQW9S81PI */
-@import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
-
-.retrofont {
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    font-size:100px;
-    letter-spacing:15px;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: #f110de;
-    text-shadow: -6px 6px #f1ed10, -15px 10px cyan;
-}
-
-/* supercenter - an (over)zealous attempt to center everything */
+}/* supercenter - an (over)zealous attempt to center everything */
 .supercenter {
     justify-content: center !important;
     text-align: center !important;
     margin: auto !important;
     align-items: center !important;
-}
-
-/* table.nsstyle is for tables with alternating blue/grey nsstyle colors */
+}/* table.nsstyle is for tables with alternating blue/grey nsstyle colors */
 .nsstyle *, .nsstyle *:before, .nsstyle *:after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -376,9 +362,7 @@ table.nsstyle {
   font-size: 0.8em;
   font-style: italic;
   color: #8a97a0;
-}
-
-/* ul.horizontalnavmenu - allowing multirow? */
+}/* ul.horizontalnavmenu - allowing multirow? */
 ul.horizontalnavmenu {
     width: 100%;
     float: left;
@@ -413,9 +397,7 @@ ul.horizontalnavmenu li a:hover {
 }
 ul.horizontalnavmenu li a.active {
     background-color: rgb(201, 205, 248);
-}
-
-/* superbold/superboldblack - an (over)zealous attempt to go above 900 font-weight bold */
+}/* superbold/superboldblack - an (over)zealous attempt to go above 900 font-weight bold */
 
 .superbold {
     /* For some sort of weird reason this doesn't look as pretty as it did over an year ago. It only works with text-shadow of 1px (on most common fonts, other thicker fonts might still work with 2px). And with text-shadow of only 1px, there's no need for such a large letter-spacing. */
@@ -428,18 +410,14 @@ ul.horizontalnavmenu li a.active {
     letter-spacing:1px;
     font-weight:bold;
     text-shadow: 0px 1px, 1px 0px, 1px 1px; /* To add to Gogutz answer, you can go even bolder by stacking up the text-shadows in a grid. Comma separate each on the line: you can also try this: text-shadow: -1px 1px, 1px 1px, 1px 1px; */
-}
-
-/* verticaltext */
+}/* verticaltext */
 /* need to have two types of vertical text?  this one and one without the 180 rotate?? */
 
 .verticaltext {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     transform: rotate(-180deg); 
-}
-
-.astrodivider {
+}.astrodivider {
   margin:64px auto;
   width:400px; 
   max-width: 100%;
@@ -476,9 +454,7 @@ ul.horizontalnavmenu li a.active {
     line-height:40px;
     font-style:normal;
      color:#312450;
-}
-
-/* ✱✳︎❄️ CSS snowflakes ❅🎄 */
+}/* ✱✳︎❄️ CSS snowflakes ❅🎄 */
 
 /* customizable snowflake styling */
 .snowflake {
