@@ -195,7 +195,8 @@ table {
 */
 }
 
-function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) { // refactor with profilicities' dom_convertAllURLsToAhrefs() function?
+function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
+    // here was profilicities' dom_convertAllURLsToAhrefs's original regex before I refactored it into domscripts_linkify() - var urlRegex = /(?<!href=")(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
     // sInputText can be innerText or innerHTML?
     var sReturn, replacePattern1, replacePattern2, replacePattern3;
     if (bTargetBlank) { var sTargetBlank = `target="_blank"`; } else { var sTargetBlank = ""; } 
@@ -208,7 +209,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) { // refactor
     sReturn = sInputText.replace(replacePattern1, function(sMatch, sMatch2_ElectricBoogaloo, sSecretThirdParameter, sSecretFourth) { // what are these secret parameters in a regex.replace's callback function?
         iDollarStoreCounter++;
         if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
-        else if (sTitleLogic == "strippeddomain") { sHrefTitle = datascripts_regexStripDomain(sMatch); }
+        else if (sTitleLogic == "strippeddomain" || sTitleLogic == "domain") { sHrefTitle = datascripts_regexStripDomain(sMatch); }
+        else if (sTitleLogic == "index.htm" || sTitleLogic == "ending_segment_of_url") { sHrefTitle = "britney" } // idk what to call this quite yet, fix later 
         else { sHrefTitle = sMatch;}
         
         return `<a href="${sMatch}" ${sTargetBlank}>${sHrefTitle}</a>`;
