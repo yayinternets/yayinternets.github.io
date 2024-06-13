@@ -200,7 +200,7 @@ function domscripts_linkify(inputText) { // refactor with profilicities' dom_con
     var replacedText, replacePattern1, replacePattern2, replacePattern3;
 
     //URLs starting with http://, https://, or ftp://
-    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacePattern1 = /(\b(https?|ftp):\/\/[-ñÑA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
     replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
 
     //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
@@ -2024,6 +2024,9 @@ dom_jsSpreadsheetify = function(data, dom) {
        data:data,
    });
 }// domADDELscripts =>
+
+// DO NOT USE THIS LINE- overrides addEventListener: addEventListener = function(oElements, sType, iIndex, fFunction) { return addEL(oElements, sType, iIndex, fFunction); }
+
 function addELClick(o,i,f) { // vs addEL's o, t, i, f
   // addEventListenerClickXYZ("td", "shift1", function() { alert("wee"); })
   // defaults
