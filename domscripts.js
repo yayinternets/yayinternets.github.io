@@ -198,7 +198,7 @@ table {
 function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) { // refactor with profilicities' dom_convertAllURLsToAhrefs() function?
     // sInputText can be innerText or innerHTML?
     var sReturn, replacePattern1, replacePattern2, replacePattern3;
-    if (bTargetBlank) { var sTargetBlank = "target='_blank'"; } else { var sTargetBlank = ""; } 
+    if (bTargetBlank) { var sTargetBlank = `target="_blank"`; } else { var sTargetBlank = ""; } 
 
     //URLs starting with http://, https://, or ftp://
     replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
@@ -211,7 +211,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) { // refactor
         else if (sTitleLogic == "strippeddomain") { sHrefTitle = datascripts_regexStripDomain(sMatch); }
         else { sHrefTitle = sMatch;}
         
-        return `<a href="${sMatch}" ${sTargetBlank}">${sHrefTitle}</a>`;
+        return `<a href="${sMatch}" ${sTargetBlank}>${sHrefTitle}</a>`;
     } );
    
     //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
