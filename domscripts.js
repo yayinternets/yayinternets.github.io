@@ -203,7 +203,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
 
     //URLs starting with http://, https://, or ftp://
     sSpanishPatterns = "ñÑÁáÉéÍíÓóÚú";
-    replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[ñÑÁáÉéÍíÓóÚú-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
     // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
     iDollarStoreCounter = 0;
     // sReturn = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
