@@ -198,8 +198,9 @@ table {
 function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // here was profilicities' dom_convertAllURLsToAhrefs's original regex before I refactored it into domscripts_linkify() - var urlRegex = /(?<!href=")(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
     // sInputText can be innerText or innerHTML?
-    var sReturn, replacePattern1, replacePattern2, replacePattern3;
+    if (bTargetBlank == undefined || bTargetBlank == null) { bTargetBlank = true; } 
     if (bTargetBlank) { var sTargetBlank = `target="_blank"`; } else { var sTargetBlank = ""; } 
+    var sReturn, replacePattern1, replacePattern2, replacePattern3;
 
     //URLs starting with http://, https://, or ftp://
     sSpanishPatterns = "ñÑÁáÉéÍíÓóÚú";
