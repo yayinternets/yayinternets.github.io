@@ -206,18 +206,24 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
     // old prior to \S replacement
     // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
+    // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
     // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
     iDollarStoreCounter = 0;
     // sReturn = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
     sReturn = sInputText.replace(replacePattern1, function(sMatch, sMatch2_ElectricBoogaloo, sSecretThirdParameter, sSecretFourth) { // what are these secret parameters in a regex.replace's callback function?
         iDollarStoreCounter++;
+
+        var sLineBreak = "";
+        sMatch = sMatch.replaceAll("<br />", "<br>");
+        if (sMatch.endsWith("<br>")) { sMatch = sMatch.replaceAll("<br>", ""); sLineBreak = "<br>"; }
+        
         if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
         else if (sTitleLogic == "strippeddomain" || sTitleLogic == "domain") { sHrefTitle = datascripts_regexStripDomain(sMatch); }
         else if (sTitleLogic == "index.htm" || sTitleLogic == "ending_segment_of_url") { sHrefTitle = "britney" } // idk what to call this quite yet, fix later 
         else { sHrefTitle = sMatch;}
         
-        return `<a href="${sMatch}" ${sTargetBlank}>${sHrefTitle}</a>`;
+        return `<a href="${sMatch}" ${sTargetBlank}>${sHrefTitle}</a>` + sLineBreak;
     } );
    
     //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
