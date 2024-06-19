@@ -211,11 +211,13 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
     iDollarStoreCounter = 0;
     // sReturn = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+    // the following \n<linebreak> is a hack that allows me to process html data since regex's /S pattern doesn't ignore <br> like it does with spaces, linebreaks and other "whitespace characters"
     sInputText = sInputText.replaceAll("<br>", "\n<linebreak>");
     sReturn = sInputText.replace(replacePattern1, function(sMatch, sMatch2_ElectricBoogaloo, sSecretThirdParameter, sSecretFourth) { // what are these secret parameters in a regex.replace's callback function?
         iDollarStoreCounter++;
 
-        if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
+        // if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
+        if (sTitleLogic.indexOf("index") > -1) { sHrefTitle = sTitleLogic.replace("index", "") + iDollarStoreCounter + ""; } 
         else if (sTitleLogic == "strippeddomain" || sTitleLogic == "domain") { sHrefTitle = datascripts_regexStripDomain(sMatch); }
         else if (sTitleLogic == "index.htm" || sTitleLogic == "ending_segment_of_url") { sHrefTitle = "britney" } // idk what to call this quite yet, fix later 
         else { sHrefTitle = sMatch;}
