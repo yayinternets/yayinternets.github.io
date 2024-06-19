@@ -217,7 +217,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
         iDollarStoreCounter++;
 
         // if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
-        if (sTitleLogic.indexOf("index") > -1) { sHrefTitle = sTitleLogic.replace("index", "") + iDollarStoreCounter + ""; } 
+        if (sTitleLogic == "domainindex" || sTitleLogic == "indexdomain") { sHrefTitle = "link" + iDollarStoreCounter + "_" + datascripts_regexStripDomain(sMatch); } 
+        if (sTitleLogic.indexOf("index") > -1) { sHrefTitle = sTitleLogic.replace("index", "") + iDollarStoreCounter; } 
         else if (sTitleLogic == "strippeddomain" || sTitleLogic == "domain") { sHrefTitle = datascripts_regexStripDomain(sMatch); }
         else if (sTitleLogic == "index.htm" || sTitleLogic == "ending_segment_of_url") { sHrefTitle = "britney" } // idk what to call this quite yet, fix later 
         else { sHrefTitle = sMatch;}
