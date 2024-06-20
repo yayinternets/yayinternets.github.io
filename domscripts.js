@@ -202,18 +202,25 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     if (bTargetBlank) { var sTargetBlank = `target="_blank"`; } else { var sTargetBlank = ""; } 
     var sReturn, replacePattern1, replacePattern2, replacePattern3;
 
+    // the following \n<linebreak> is a hack that allows me to process html data since regex's /S pattern doesn't ignore <br> like it does with spaces, linebreaks and other "whitespace characters"
+    // sInputText = sInputText.replaceAll("<br>", "\n<linebreak>");
+    sInputText = sInputText.replaceAll("<", "\n<linebreak");
+
+    
+    // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
+    replacePattern0 = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
+    sReturn = sInputText.replace(replacePattern0, '<a href="http://$2>$1</a>');
+    
     //URLs starting with http://, https://, or ftp://
-    sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
+    // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
     // old prior to \S replacement
     // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
     replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
     // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
     // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
     iDollarStoreCounter = 0;
-    // sReturn = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
-    // the following \n<linebreak> is a hack that allows me to process html data since regex's /S pattern doesn't ignore <br> like it does with spaces, linebreaks and other "whitespace characters"
-    sInputText = sInputText.replaceAll("<br>", "\n<linebreak>");
-    sReturn = sInputText.replace(replacePattern1, function(sMatch, sMatch2_ElectricBoogaloo, sSecretThirdParameter, sSecretFourth) { // what are these secret parameters in a regex.replace's callback function?
+    // sReturn = sReturn.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+    sReturn = sReturn.replace(replacePattern1, function(sMatch, sMatch2_ElectricBoogaloo, sSecretThirdParameter, sSecretFourth) { // what are these secret parameters in a regex.replace's callback function?
         iDollarStoreCounter++;
 
         // if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
@@ -225,7 +232,6 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
         
         return `<a href="${sMatch}" ${sTargetBlank}>${sHrefTitle}</a>`;
     } );
-    sReturn = sReturn.replaceAll("\n<linebreak>", "<br>");
 
     //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
     replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
@@ -236,6 +242,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
     sReturn = sReturn.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
 
+    //sReturn = sReturn.replaceAll("\n<linebreak>", "<br>");
+    sReturn = sReturn.replaceAll("\n<linebreak", "<");
     return sReturn;
 }
 function datascripts_regexStripDomain(url) { // from searchtree.htm's fStripDomain()
