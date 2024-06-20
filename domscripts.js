@@ -209,7 +209,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     
     // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
     replacePattern0 = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
-    sReturn = sInputText.replace(replacePattern0, '<a href="http://$2>$1</a>');
+    sReturn = sInputText.replace(replacePattern0, '<a href="$2">$1</a>');
     
     //URLs starting with http://, https://, or ftp://
     // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
