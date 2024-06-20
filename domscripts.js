@@ -199,7 +199,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // here was profilicities' dom_convertAllURLsToAhrefs's original regex before I refactored it into domscripts_linkify() - var urlRegex = /(?<!href=")(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
     // sInputText can be innerText or innerHTML?
     if (bTargetBlank == undefined || bTargetBlank == null) { bTargetBlank = true; } 
-    if (bTargetBlank) { var sTargetBlank = `target="_blank"`; } else { var sTargetBlank = ""; } 
+    if (bTargetBlank) { var sTargetBlank = ` target="_blank"`; } else { var sTargetBlank = ""; } 
     var sReturn, replacePattern1, replacePattern2, replacePattern3;
 
     // the following \n<linebreak> is a hack that allows me to process html data since regex's /S pattern doesn't ignore <br> like it does with spaces, linebreaks and other "whitespace characters"
@@ -209,7 +209,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     
     // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
     replacePattern0 = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
-    sReturn = sInputText.replace(replacePattern0, '<a href="$2">$1</a>');
+    sReturn = sInputText.replace(replacePattern0, '<a ' + sTargetBlank + 'href="http://$2>$1</a>');
     
     //URLs starting with http://, https://, or ftp://
     // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
@@ -246,6 +246,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     sReturn = sReturn.replaceAll("\n<linebreak", "<");
     return sReturn;
 }
+
+
 function datascripts_regexStripDomain(url) { // from searchtree.htm's fStripDomain()
     // var url = "https://plato.stanford.edu/search";
     var regex = /^https:\/\/(?:www\.)?([^/]+)/;
