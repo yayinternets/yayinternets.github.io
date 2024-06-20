@@ -208,8 +208,9 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
 
     
     // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
+    // moiquestion: there are 3 groups so why does $1, $2 not make sense here?  is the second group really a "negative lookahead" and doesn't count as a group?
     replacePattern0 = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
-    sReturn = sInputText.replace(replacePattern0, '<a ' + sTargetBlank + 'href="http://$2>$1</a>');
+    sReturn = sInputText.replace(replacePattern0, '<a ' + sTargetBlank + 'href="$2">$1</a>');
     
     //URLs starting with http://, https://, or ftp://
     // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
