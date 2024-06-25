@@ -208,7 +208,10 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // sInputText = sInputText.replaceAll("<br>", "\n<linebreak>");
     sReturn = sInputText.replaceAll("<", "\n<linebreak");
 
-    // replace the realmarkdown syntax [link name](https://www.link.com) here   
+    // replace the realmarkdown syntax [link name](https://www.link.com) here
+    replacePattern00 =  /\!\[(.*?)\]\((.*?)\)/gim; 
+    sReturn = sReturn.replace(replacePattern00, '<img style="font-size:23pt" src="$2">');
+    // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>');
     replacePattern00 =  /\[(.*?)\]\((.*?)\)/gim; // via https://stackoverflow.com/questions/37462126/regex-match-markdown-link
     sReturn = sReturn.replace(replacePattern00, '<a ' + sTargetBlank + 'href="$2">$1</a>');
     
