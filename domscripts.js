@@ -195,6 +195,7 @@ table {
 */
 }
 
+
 function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // here was profilicities' dom_convertAllURLsToAhrefs's original regex before I refactored it into domscripts_linkify() - var urlRegex = /(?<!href=")(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
     // sInputText can be innerText or innerHTML?
@@ -208,9 +209,11 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // sInputText = sInputText.replaceAll("<br>", "\n<linebreak>");
     sReturn = sInputText.replaceAll("<", "\n<linebreak");
 
-    // replace the realmarkdown syntax [link name](https://www.link.com) here
+    // replace the realmarkdown syntax for images ![link name](https://www.link.com/whatever.jpg) here
     replacePattern00 =  /\!\[(.*?)\]\((.*?)\)/gim; 
     sReturn = sReturn.replace(replacePattern00, '<img style="size:23pt" src="$2">');
+
+    // replace the realmarkdown syntax [link name](https://www.link.com) here
     // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>');
     replacePattern00 =  /\[(.*?)\]\((.*?)\)/gim; // via https://stackoverflow.com/questions/37462126/regex-match-markdown-link
     sReturn = sReturn.replace(replacePattern00, '<a ' + sTargetBlank + ' href="$2">$1</a>');
@@ -224,7 +227,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
     // old prior to \S replacement
     // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
+    replacePattern1 = /(?<!src="|href="|src='|href=')(\b(https?|ftp):\/\/[\S]*)/gim;
     // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
     // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
     iDollarStoreCounter = 0;
