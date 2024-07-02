@@ -216,22 +216,23 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // replace the realmarkdown syntax [link name](https://www.link.com) here
     // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>');
     replacePattern00 =  /\[(.*?)\]\((.*?)\)/gim; // via https://stackoverflow.com/questions/37462126/regex-match-markdown-link
-    sReturn = sReturn.replace(replacePattern00, '<a ' + sTargetBlank + ' href="$2">$1</a>');
+    sReturn = sReturn.replace(replacePattern00, '<a' + sTargetBlank + ' href="$2">$1</a>');
     
     // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
     // moiquestion: there are 3 groups so why does $1, $2 not make sense here?  is the second group really a "negative lookahead" and doesn't count as a group?
     replacePattern0 = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
-    sReturn = sReturn.replace(replacePattern0, '<a ' + sTargetBlank + ' href="$2">$1</a>');
+    sReturn = sReturn.replace(replacePattern0, '<a' + sTargetBlank + ' href="$2">$1</a>');
     
     // URLs starting with http://, https://, or ftp://
     // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ";
     // old prior to \S replacement
     // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    replacePattern1 = /(?<!src="|href="|src='|href=')(\b(https?|ftp):\/\/[\S]*)/gim;
+    replacePattern1 = /(?<!src="|href="|src='|href='|\=)(\b(https?|ftp):\/\/[\S]*)/gim;
     // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
     // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
     iDollarStoreCounter = 0;
     // sReturn = sReturn.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+    
     sReturn = sReturn.replace(replacePattern1, function(sMatch, sMatch2_ElectricBoogaloo, sSecretThirdParameter, sSecretFourth) { // what are these secret parameters in a regex.replace's callback function?
         iDollarStoreCounter++;
 
@@ -255,7 +256,6 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     sReturn = sReturn.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
 
     // now fix the linebreak hack that I included at beginning to assist the regex to avoid html tags when parsing for urls
-    //sReturn = sReturn.replaceAll("\n<linebreak>", "<br>");
     sReturn = sReturn.replaceAll("\n<linebreak", "<");
     return sReturn;
 }
