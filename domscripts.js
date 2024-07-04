@@ -195,6 +195,57 @@ table {
 */
 }
 
+function domscripts_unorderedListify(sString) {
+    var iSpaceIndents, iPreviousSpaceIndents = -1, iCurrentIndention = 1, iNestingTracker=0;
+    return sString.split("\n").reduce((agg,e,i,aArray)=>{
+        // console.log(aArray);
+        if (e.trim().startsWith("*")) {
+            sFront = ""; sBack = "";
+            iSpaceIndents = e.split("*")[0].length;
+            // console.log(iSpaceIndents + " / " + iPreviousSpaceIndents);
+            sLine = e.split("*").slice(1,).join("*").trim();
+    
+            // first build out the conditional <ul> vs </ul> logic
+            if (i==0) {
+                for(ii=0; ii<=iSpaceIndents; ii++) {
+                   sFront = sFront + "<ul>"; 
+                   iNestingTracker++;
+                }
+            } else { // console.log(iSpaceIndents-iPreviousSpaceIndents);
+                if (iSpaceIndents == iPreviousSpaceIndents) {
+                    // no <ul> or </ul> necessary since its the same list
+                } else if (iSpaceIndents < iPreviousSpaceIndents) {
+                 for(ii=0; ii<iPreviousSpaceIndents-iSpaceIndents; ii++) {
+                   sFront = sFront + "</ul>"; iNestingTracker--;
+                 } 
+                } else if (iSpaceIndents > iPreviousSpaceIndents) {
+                 for(ii=0; ii<iSpaceIndents-iPreviousSpaceIndents; ii++) {
+                   sFront = sFront + "<ul>"; iNestingTracker++;
+                 } 
+                }
+                
+            }
+    
+            // now build out the easier <li></li> logic
+            sLine = "<li>" + sLine + "</li>";
+    
+            // if on the final loop, then put in proper number of ending </ul>'s
+            if (i==aArray.length-1) {
+                for(ii=0; ii<iNestingTracker; ii++) {
+                    sBack = sBack + "</ul>";
+                } 
+            }
+            //console.log("fudge");
+            agg = agg + sFront + sLine + sBack + "\n"
+            iPreviousSpaceIndents = iSpaceIndents;
+        } else {
+            agg = agg + e;
+            // iPreviousSpaceIndents = -1, iCurrentIndention = 1, iNestingTracker=0;
+        }
+        return agg;
+    
+    }, "")
+}
 
 function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
     // here was profilicities' dom_convertAllURLsToAhrefs's original regex before I refactored it into domscripts_linkify() - var urlRegex = /(?<!href=")(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
