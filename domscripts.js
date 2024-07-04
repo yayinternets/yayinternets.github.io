@@ -196,6 +196,7 @@ table {
 }
 
 function domscripts_unorderedListify(sString) {
+    // ADD TO UNIT TEST? - document.body.innerHTML = domscripts_unorderedListify("# intro\n# intro - summary\n## a\n* a\n * a.1\n## b\n* b\n* b.1\n* b.2\n## c\n * c.1\n * c.2\n  * c.2.1\n#TEST\n## test - summary\n    * blah1\n    * item2\n\n    # CONCLUSION\n## results\n### experiment 1\n* 1\n* 2\n* 3\n### experiment 2\n* 4\n* 5\n* 6\n\n    ");
     var iSpaceIndents, iPreviousSpaceIndents = -1, iULIndents=0;
     return sString.split("\n").reduce((agg,e,i,aArray)=>{
         sFront = ""; sBack = "";
@@ -237,8 +238,8 @@ function domscripts_unorderedListify(sString) {
             //console.log("fudge");
             agg = agg + sFront + sLine + sBack + "\n"
             iPreviousSpaceIndents = iSpaceIndents;
-        } else { // else then close all </ul> by ???
-            console.log("section ending, close me - we need " + iULIndents + " <ul>'s ")
+        } else { // section ending: close all </ul>, and check for "#"" since we know we're not on a "*" line
+            // console.log("section ending, close me - we need " + iULIndents + " <ul>'s ")
             iSpaceIndents = 0;
             
             // for(ii=0; ii<iPreviousSpaceIndents-iSpaceIndents; ii++) {
@@ -246,10 +247,19 @@ function domscripts_unorderedListify(sString) {
                 sFront = sFront + "</ul>"; // iULIndents--;
             }
             iSpaceIndents = undefined; iPreviousSpaceIndents = -1; iULIndents = 0; // reset iSpaceIndents to undefined for debugging purposes
+            
+            if (e.startsWith("#")) {
+                iNumberOfOctothorpes = (e.match(/^#+/g) || [])[0].length;
+                if (iNumberOfOctothorpes > 6) { iNumberOfOctothorpes = 6; } // nothing beyond h6
+                sHTMLTitleTag = "h" + iNumberOfOctothorpes;
+                e = e.replace(/^#*/g, "").trim();
+                e = `<${sHTMLTitleTag}>${e}</${sHTMLTitleTag}>`;
+            }
+            
             agg = agg + sFront + e;
             // iPreviousSpaceIndents = -1, iCurrentIndention = 1, iULIndents=0;
         }
-        console.log(`line = ${i+1}; iSpaceIndents = ${iSpaceIndents}; iPreviousSpaceIndents = ${iPreviousSpaceIndents}; iULIndents = ${iULIndents};  `);
+        //console.log(`line = ${i+1}; iSpaceIndents = ${iSpaceIndents}; iPreviousSpaceIndents = ${iPreviousSpaceIndents}; iULIndents = ${iULIndents};  `);
 
         return agg;
     
