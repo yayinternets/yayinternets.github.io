@@ -196,52 +196,61 @@ table {
 }
 
 function domscripts_unorderedListify(sString) {
-    var iSpaceIndents, iPreviousSpaceIndents = -1, iCurrentIndention = 1, iNestingTracker=0;
+    var iSpaceIndents, iPreviousSpaceIndents = -1, iULIndents=0;
     return sString.split("\n").reduce((agg,e,i,aArray)=>{
-        // console.log(aArray);
+        sFront = ""; sBack = "";
+
         if (e.trim().startsWith("*")) {
-            sFront = ""; sBack = "";
-            iSpaceIndents = e.split("*")[0].length;
+            iSpaceIndents = e.split("*")[0].length;;
             // console.log(iSpaceIndents + " / " + iPreviousSpaceIndents);
             sLine = e.split("*").slice(1,).join("*").trim();
     
             // first build out the conditional <ul> vs </ul> logic
-            if (i==0) {
+            if (i==0) { // on first iteration, assume <ul> obvi
                 for(ii=0; ii<=iSpaceIndents; ii++) {
-                   sFront = sFront + "<ul>"; 
-                   iNestingTracker++;
+                   sFront = sFront + "<ul>"; iULIndents++;
                 }
             } else { // console.log(iSpaceIndents-iPreviousSpaceIndents);
                 if (iSpaceIndents == iPreviousSpaceIndents) {
                     // no <ul> or </ul> necessary since its the same list
                 } else if (iSpaceIndents < iPreviousSpaceIndents) {
                  for(ii=0; ii<iPreviousSpaceIndents-iSpaceIndents; ii++) {
-                   sFront = sFront + "</ul>"; iNestingTracker--;
+                   sFront = sFront + "</ul>"; iULIndents--;
                  } 
                 } else if (iSpaceIndents > iPreviousSpaceIndents) {
                  for(ii=0; ii<iSpaceIndents-iPreviousSpaceIndents; ii++) {
-                   sFront = sFront + "<ul>"; iNestingTracker++;
+                   sFront = sFront + "<ul>"; iULIndents++;
                  } 
                 }
-                
             }
     
             // now build out the easier <li></li> logic
             sLine = "<li>" + sLine + "</li>";
     
-            // if on the final loop, then put in proper number of ending </ul>'s
+            // if thsi bullet point is in fact the final loop, then put in proper number of ending </ul>'s
             if (i==aArray.length-1) {
-                for(ii=0; ii<iNestingTracker; ii++) {
-                    sBack = sBack + "</ul>";
-                } 
+                for(ii=0; ii<iULIndents; ii++) {
+                    sBack = sBack + "</ul>"; iULIndents--;
+                }
+                iSpaceIndents = undefined; iPreviousSpaceIndents = -1; iULIndents = 0; // reset iSpaceIndents to undefined for debugging purposes
             }
             //console.log("fudge");
             agg = agg + sFront + sLine + sBack + "\n"
             iPreviousSpaceIndents = iSpaceIndents;
-        } else {
-            agg = agg + e;
-            // iPreviousSpaceIndents = -1, iCurrentIndention = 1, iNestingTracker=0;
+        } else { // else then close all </ul> by ???
+            console.log("section ending, close me - we need " + iULIndents + " <ul>'s ")
+            iSpaceIndents = 0;
+            
+            // for(ii=0; ii<iPreviousSpaceIndents-iSpaceIndents; ii++) {
+            for(ii=0; ii<iULIndents; ii++) {
+                sFront = sFront + "</ul>"; // iULIndents--;
+            }
+            iSpaceIndents = undefined; iPreviousSpaceIndents = -1; iULIndents = 0; // reset iSpaceIndents to undefined for debugging purposes
+            agg = agg + sFront + e;
+            // iPreviousSpaceIndents = -1, iCurrentIndention = 1, iULIndents=0;
         }
+        console.log(`line = ${i+1}; iSpaceIndents = ${iSpaceIndents}; iPreviousSpaceIndents = ${iPreviousSpaceIndents}; iULIndents = ${iULIndents};  `);
+
         return agg;
     
     }, "")
