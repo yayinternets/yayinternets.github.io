@@ -248,76 +248,76 @@ function domscripts_unorderedListify(sString) {
 }
 
 function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
-    // here was profilicities' dom_convertAllURLsToAhrefs's original regex before I refactored it into domscripts_linkify() - var urlRegex = /(?<!href=")(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
-    // sInputText can be innerText or innerHTML?
-    if (sTitleLogic) {} else { sTitleLogic = "";}
-    if (bTargetBlank == undefined || bTargetBlank == null) { bTargetBlank = true; } 
-    if (bTargetBlank) { var sTargetBlank = ` target="_blank"`; } else { var sTargetBlank = ""; } 
-    var sReturn, replacePattern1, replacePattern2, replacePattern3;
+  // here was profilicities' dom_convertAllURLsToAhrefs's original regex before I refactored it into domscripts_linkify() - var urlRegex = /(?<!href=")(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
+  // sInputText can be innerText or innerHTML?
+  if (sTitleLogic) {} else { sTitleLogic = "";}
+  if (bTargetBlank == undefined || bTargetBlank == null) { bTargetBlank = true; } 
+  if (bTargetBlank) { var sTargetBlank = ` target="_blank"`; } else { var sTargetBlank = ""; } 
+  var sReturn, replacePattern1, replacePattern2, replacePattern3;
 
-    // the following \n<linebreak> is a hack that allows me to process html data since regex's /S pattern doesn't ignore <br> like it does with spaces, linebreaks and other "whitespace characters"
-    // Originally targeting all instances of "<br>", I'm now including all instances of "<", but I might need to not just include all instances of "<" but also "("?
-    // sInputText = sInputText.replaceAll("<br>", "\n<linebreak>");
-    sReturn = sInputText.replaceAll("<", "\n<linebreak");
+  // the following \n<linebreak> is a hack that allows me to process html data since regex's /S pattern doesn't ignore <br> like it does with spaces, linebreaks and other "whitespace characters"
+  // Originally targeting all instances of "<br>", I'm now including all instances of "<", but I might need to not just include all instances of "<" but also "("?
+  // sInputText = sInputText.replaceAll("<br>", "\n<linebreak>");
+  sReturn = sInputText.replaceAll("<", "\n<linebreak");
 
-    // replace the realmarkdown syntax for images ![link name](https://www.link.com/whatever.jpg) here
-    replacePattern =  /\!\[(.*?)\]\((.*?)\)/gim; 
-    sReturn = sReturn.replace(replacePattern, '<img class="domscripts_linkify" src="$2">'); // eg .domscripts_linkify { height:20pt; width: 20pt; }
+  // replace the realmarkdown syntax for images ![link name](https://www.link.com/whatever.jpg) here
+  replacePattern =  /\!\[(.*?)\]\((.*?)\)/gim; 
+  sReturn = sReturn.replaceAll(replacePattern, '<img class="domscripts_linkify" src="$2">'); // eg .domscripts_linkify { height:20pt; width: 20pt; }
 
-    // replace the 𝓣search term𝓣 here - more math alphabet shortcuts like this?
-    replacePattern =  /𝓣(.*?)𝓣/gim; 
-    // sReturn = sReturn.replace(replacePattern00, '<a href="https://theoryoftheory.github.io/searchtree.htm?search=$1">𝓣$1</a>');
-    sReturn = sReturn.replace(replacePattern, function(sTotalMatch, sFirstMatch, iPositionMatching) {
-        // console.log(sInnerMatch.replace('"', '%22').replace("'", "%27"));
-        return `<a href="https://theoryoftheory.github.io/searchtree.htm?search=${sFirstMatch.replace('"', '%22').replace("'", "%27")}">𝓣${sFirstMatch}</a>`;
-    });
-    
-    // replace the realmarkdown syntax [link name](https://www.link.com) here
-    // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>');
-    replacePattern =  /\[(.*?)\]\((.*?)\)/gim; // via https://stackoverflow.com/questions/37462126/regex-match-markdown-link
-    // sReturn = sReturn.replace(replacePattern00, '<a' + sTargetBlank + ' href="$2">$1</a>');
-    sReturn = sReturn.replace(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) {
-        return `<a href='${sSecondMatch}'>${sFirstMatch}</a>`;
-    });
-    
-    // .replace('"', '%22').replace("'", "%27");
-    // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
-    // moiquestion: there are 3 groups so why does $1, $2 not make sense here?  is the second group really a "negative lookahead" and doesn't count as a group?
-    replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
-    sReturn = sReturn.replace(replacePattern, '<a' + sTargetBlank + ' href="$2">$1</a>');
-    
-    // URLs starting with http://, https://, or ftp://
-    // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ"//  old prior to \S replacement // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    replacePattern = /(?<!src="|href="|src='|href='|\=)(\b(https?|ftp):\/\/[\S]*)/gim;
-    // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
-    iDollarStoreCounter = 0;
-    // sReturn = sReturn.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
-    sReturn = sReturn.replace(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) { 
-        iDollarStoreCounter++;
+  // replace the 𝓣search term𝓣 here - more math alphabet shortcuts like this?
+  replacePattern =  /𝓣(.*?)𝓣/gim; 
+  // sReturn = sReturn.replace(replacePattern00, '<a href="https://theoryoftheory.github.io/searchtree.htm?search=$1">𝓣$1</a>');
+  sReturn = sReturn.replaceAll(replacePattern, function(sTotalMatch, sFirstMatch, iPositionMatching) {
+      // console.log(sInnerMatch.replace('"', '%22').replace("'", "%27"));
+      return `<a href="https://theoryoftheory.github.io/searchtree.htm?search=${sFirstMatch.replaceAll('"', '%22').replaceAll("'", "%27")}">𝓣${sFirstMatch}</a>`;
+  });
+  
+  // replace the realmarkdown syntax [link name](https://www.link.com) here
+  // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>');
+  replacePattern =  /\[(.*?)\]\((.*?)\)/gim; // via https://stackoverflow.com/questions/37462126/regex-match-markdown-link
+  // sReturn = sReturn.replace(replacePattern00, '<a' + sTargetBlank + ' href="$2">$1</a>');
+  sReturn = sReturn.replaceAll(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) {
+      return `<a href='${sSecondMatch}'>${sFirstMatch}</a>`;
+  });
+  
+  // .replace('"', '%22').replace("'", "%27");
+  // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
+  // moiquestion: there are 3 groups so why does $1, $2 not make sense here?  is the second group really a "negative lookahead" and doesn't count as a group?
+  replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
+  sReturn = sReturn.replaceAll(replacePattern, '<a' + sTargetBlank + ' href="$2">$1</a>');
+  
+  // URLs starting with http://, https://, or ftp://
+  // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ"//  old prior to \S replacement // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+  replacePattern = /(?<!src="|href="|src='|href='|\=)(\b(https?|ftp):\/\/[\S]*)/gim;
+  // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
+  // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
+  iDollarStoreCounter = 0;
+  // sReturn = sReturn.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+  sReturn = sReturn.replaceAll(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) { 
+      iDollarStoreCounter++;
 
-        // if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
-        if (sTitleLogic == "domainindex" || sTitleLogic == "indexdomain") { sHrefTitle = "link" + iDollarStoreCounter + "_" + datascripts_regexStripDomain(sTotalMatch); } 
-        else if (sTitleLogic.indexOf("index") > -1) { sHrefTitle = sTitleLogic.replace("index", "") + iDollarStoreCounter; } 
-        else if (sTitleLogic == "strippeddomain" || sTitleLogic == "domain") { sHrefTitle = datascripts_regexStripDomain(sTotalMatch); }
-        else if (sTitleLogic == "index.htm" || sTitleLogic == "ending_segment_of_url") { sHrefTitle = "britney" } // idk what to call this quite yet, fix later 
-        else { sHrefTitle = sTotalMatch;}
-        
-        return `<a href="${sTotalMatch.replaceAll('"', '%22').replace("'", "%27")}" ${sTargetBlank}>${sHrefTitle}</a>`;
-    } );
+      // if (sTitleLogic == "index") { sHrefTitle = iDollarStoreCounter + ""; } 
+      if (sTitleLogic == "domainindex" || sTitleLogic == "indexdomain") { sHrefTitle = "link" + iDollarStoreCounter + "_" + datascripts_regexStripDomain(sTotalMatch); } 
+      else if (sTitleLogic.indexOf("index") > -1) { sHrefTitle = sTitleLogic.replace("index", "") + iDollarStoreCounter; } 
+      else if (sTitleLogic == "strippeddomain" || sTitleLogic == "domain") { sHrefTitle = datascripts_regexStripDomain(sTotalMatch); }
+      else if (sTitleLogic == "index.htm" || sTitleLogic == "ending_segment_of_url") { sHrefTitle = "britney" } // idk what to call this quite yet, fix later 
+      else { sHrefTitle = sTotalMatch;}
+      
+      return `<a href="${sTotalMatch.replaceAll('"', '%22').replaceAll("'", "%27")}" ${sTargetBlank}>${sHrefTitle}</a>`;
+  } );
 
-    // URLs starting with "www." (without // before it, or it'd re-link the ones done above).
-    replacePattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-    // sReturn = sReturn.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-    sReturn = sReturn.replaceAll(replacePattern, '$1<a href="http://$2" ' + sTargetBlank + '>$2</a>');
+  // URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+  replacePattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+  // sReturn = sReturn.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+  sReturn = sReturn.replaceAll(replacePattern, '$1<a href="http://$2" ' + sTargetBlank + '>$2</a>');
 
-    // Change email addresses to mailto:: links.
-    replacePattern = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
-    sReturn = sReturn.replaceAll(replacePattern, '<a href="mailto:$1">$1</a>');
+  // Change email addresses to mailto:: links.
+  replacePattern = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+  sReturn = sReturn.replaceAll(replacePattern, '<a href="mailto:$1">$1</a>');
 
-    // now fix the linebreak hack that I included at beginning to assist the regex to avoid html tags when parsing for urls
-    sReturn = sReturn.replaceAll("\n<linebreak", "<");
-    return sReturn;
+  // now fix the linebreak hack that I included at beginning to assist the regex to avoid html tags when parsing for urls
+  sReturn = sReturn.replaceAll("\n<linebreak", "<");
+  return sReturn;
 }
 
 
