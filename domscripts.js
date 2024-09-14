@@ -292,7 +292,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   });
   
   // britney?
-  sReturn = sReturn.replaceAll(/y\@(\w+)/g, "<a href='https://www.youtube.com/$1'>@$1</a>");
+  sReturn = sReturn.replaceAll(/y\@(\w+)/g, "<a href='https://www.youtube.com/@$1'>@$1</a>");
   
   // replace the realmarkdown syntax [link name](https://www.link.com) here
   // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>');
