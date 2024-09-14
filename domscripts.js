@@ -294,7 +294,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // britney?
   sReturn = sReturn.replaceAll(/y\@(\w+)/g, "<a href='https://www.youtube.com/@$1'>@$1</a>");
   sReturn = sReturn.replaceAll(/t\@(\w+)/g, "<a href='https://www.twitter.com/$1'>@$1</a>");
-  sReturn = sReturn..replaceAll(/\/u\/(\w+)/g, "<a href='https://old.reddit.com/user/$1'>/u/$1</a>")
+  sReturn = sReturn.replaceAll(/\/u\/(\w+)/g, "<a href='https://old.reddit.com/user/$1'>/u/$1</a>")
   
   
   // replace the realmarkdown syntax [link name](https://www.link.com) here
