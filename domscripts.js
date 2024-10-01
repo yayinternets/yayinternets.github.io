@@ -292,11 +292,11 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   });
   
   // britney?
-  sReturn = sReturn.replaceAll(/l\@(\w+)/g, "<a href='https://www.linkedin.com/in/@$1/recent-activity/comments/'>l@$1</a>");
-  sReturn = sReturn.replaceAll(/y\@(\w+)/g, "<a href='https://www.youtube.com/@$1'>y@$1</a>");
-  sReturn = sReturn.replaceAll(/t\@(\w+)/g, "<a href='https://www.twitter.com/$1'>t@$1</a>");
-  sReturn = sReturn.replaceAll(/\/u\/(\w+)/g, "<a href='https://old.reddit.com/user/$1'>/u/$1</a>")
-  sReturn = sReturn.replaceAll(/\/r\/(\w+)/g, "<a href='https://old.reddit.com/reddit/$1'>/r/$1</a>")
+  sReturn = sReturn.replaceAll(/(^|\s|\n)l\@(\w+)/g, "<a href='https://www.linkedin.com/in/@$2/recent-activity/comments/'>l@$2</a>");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y\@(\w+)/g, "<a href='https://www.youtube.com/@$2'>y@$2</a>");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)t\@(\w+)/g, "<a href='https://www.twitter.com/$2'>t@$2</a>");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)\/u\/(\w+)/g, "<a href='https://old.reddit.com/user/$2'>/u/$2</a>")
+  sReturn = sReturn.replaceAll(/(^|\s|\n)\/r\/(\w+)/g, "<a href='https://old.reddit.com/reddit/$2'>/r/$2</a>")
   
   
   // replace the realmarkdown syntax [link name](https://www.link.com) here
