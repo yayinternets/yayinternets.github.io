@@ -308,6 +308,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   replacePattern =  /\[(.*?)\]\((.*?)\)/gim; // via https://stackoverflow.com/questions/37462126/regex-match-markdown-link
   // sReturn = sReturn.replace(replacePattern00, '<a' + sTargetBlank + ' href="$2">$1</a>');
   sReturn = sReturn.replaceAll(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) {
+      sSecondMatch = sSecondMatch.startsWith('http') ? sSecondMatch : 'https://' + sSecondMatch;
       return `&nbsp;<a href='${sSecondMatch}'>${sFirstMatch}</a>&nbsp;`;
   });
   
@@ -315,8 +316,15 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // REPLACE dollartreemarkdown!!link.com link logic
   // moiquestion: there are 3 groups so why does $1, $2 not make sense here?  is the second group really a "negative lookahead" and doesn't count as a group?
   // replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
-  replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp)?(:\/\/)?[\S]+)/gim;
-  sReturn = sReturn.replaceAll(replacePattern, '&nbsp;<a' + sTargetBlank + ' href="$2">$1</a>&nbsp;');
+  // replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp)?(:\/\/)?[\S]+)/gim;
+  // sReturn = sReturn.replaceAll(replacePattern, '&nbsp;<a' + sTargetBlank + ' href="$2">$1</a>&nbsp;');
+  replacePattern = /([\S]*)!!(?<!href="|')([\S]+\.[\S]+)/gim;
+  sReturn = sReturn.replace(replacePattern, (match, p1, p2) => {
+    // Ensure p2 starts with a valid protocol
+    const href = p2.startsWith('http://') || p2.startsWith('https://') ? p2 : `https://${p2}`;
+    return `&nbsp;<a${sTargetBlank} href="${href}">${p1}</a>&nbsp;`;
+  });
+
   
   // URLs starting with http://, https://, or ftp://
   // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ"//  old prior to \S replacement // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
@@ -343,9 +351,9 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // sReturn = sReturn.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>&nbsp;');
   sReturn = sReturn.replaceAll(replacePattern, '$1<a href="http://$2" ' + sTargetBlank + '>$2</a>&nbsp;');
 
-  // Change email addresses to mailto:: links.
-  replacePattern = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
-  sReturn = sReturn.replaceAll(replacePattern, '<a href="mailto:$1">$1</a>');
+  // REPLACE user@email.com - Change email addresses to mailto:: links.
+  // replacePattern = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+  // sReturn = sReturn.replaceAll(replacePattern, '<a href="mailto:$1">$1</a>');
 
   // now fix the linebreak hack that I included at beginning to assist the regex to avoid html tags when parsing for urls
   sReturn = sReturn.replaceAll("\n<linebreak", "<");
