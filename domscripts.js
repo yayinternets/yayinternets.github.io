@@ -295,7 +295,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   
   // britney? - need to change twitter and reddit to match youtube's unicode/í-matching interntional words
   // sReturn = sReturn.replaceAll(/(^|\s|\n)y\@([\w-]+)/g, "<a href='https://www.youtube.com/@$2'>y@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "<a href='https://www.youtube.com/@$2'>y@$2</a>&nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "<a href='https://www.youtube.com/$2'>y@$2</a>&nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "<a href='https://www.twitter.com/$2'>t@$2</a>&nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)\/u\/([\w-]+)/g, "<a href='https://old.reddit.com/user/$2'>/u/$2</a>&nbsp;")
   sReturn = sReturn.replaceAll(/(^|\s|\n)\/r\/([\w+-]+)/g, "<a href='https://old.reddit.com/r/$2'>/r/$2</a>&nbsp;")
