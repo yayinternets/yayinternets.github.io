@@ -294,26 +294,27 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   });
   
   // britney? - need to change twitter and reddit to match youtube's unicode/í-matching interntional words
-  // sReturn = sReturn.replaceAll(/(^|\s|\n)y\@([\w-]+)/g, "<a href='https://www.youtube.com/@$2'>y@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "<a href='https://www.youtube.com/$2'>y@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "<a href='https://www.twitter.com/$2'>t@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)\/u\/([\w-]+)/g, "<a href='https://old.reddit.com/user/$2'>/u/$2</a>&nbsp;")
-  sReturn = sReturn.replaceAll(/(^|\s|\n)\/r\/([\w+-]+)/g, "<a href='https://old.reddit.com/r/$2'>/r/$2</a>&nbsp;")
+  // sReturn = sReturn.replaceAll(/(^|\s|\n)y\@([\w-]+)/g, "&nbsp;<a href='https://www.youtube.com/@$2'>y@$2</a>&nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@@([\p{L}\p{M}\w-]+)/gu, "&nbsp;<a href='https://www.youtube.com/@$2'>y@@$2</a>&nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "&nbsp;<a href='https://www.youtube.com/$2'>y@$2</a>&nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "&nbsp;<a href='https://www.twitter.com/$2'>t@$2</a>&nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)\/u\/([\w-]+)/g, "&nbsp;<a href='https://old.reddit.com/user/$2'>/u/$2</a>&nbsp;")
+  sReturn = sReturn.replaceAll(/(^|\s|\n)\/r\/([\w+-]+)/g, "&nbsp;<a href='https://old.reddit.com/r/$2'>/r/$2</a>&nbsp;")
 
   
   // replace the realmarkdown syntax [link name](https://www.link.com) here
-  // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>&nbsp;');
+  // sReturn = sReturn.replace(replacePattern00, '<img ' + sTargetBlank + 'src="$2">$1</a>');
   replacePattern =  /\[(.*?)\]\((.*?)\)/gim; // via https://stackoverflow.com/questions/37462126/regex-match-markdown-link
-  // sReturn = sReturn.replace(replacePattern00, '<a' + sTargetBlank + ' href="$2">$1</a>&nbsp;');
+  // sReturn = sReturn.replace(replacePattern00, '<a' + sTargetBlank + ' href="$2">$1</a>');
   sReturn = sReturn.replaceAll(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) {
-      return `<a href='${sSecondMatch}'>${sFirstMatch}</a>&nbsp;`;
+      return `&nbsp;<a href='${sSecondMatch}'>${sFirstMatch}</a>&nbsp;`;
   });
   
   // .replace('"', '%22').replace("'", "%27");
   // replace the dollartreemarkdown!!dollartreemarkdown.com link logic
   // moiquestion: there are 3 groups so why does $1, $2 not make sense here?  is the second group really a "negative lookahead" and doesn't count as a group?
   replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
-  sReturn = sReturn.replaceAll(replacePattern, '<a' + sTargetBlank + ' href="$2">$1</a>&nbsp;');
+  sReturn = sReturn.replaceAll(replacePattern, '&nbsp;<a' + sTargetBlank + ' href="$2">$1</a>&nbsp;');
   
   // URLs starting with http://, https://, or ftp://
   // sSpanishPatterns = "ñÑÁáÉéÍíÓóÚúÜü"; sGerman = "ÄäËëÏïÖöŸÿ"//  old prior to \S replacement // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[-ñÑÁáÉéÍíÓóÚúÜüÄäËëÏïÖöŸÿA-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
@@ -321,7 +322,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // replacePattern1 = /(?<!href="|')(\b(https?|ftp):\/\/[\S]*[-A-Z0-9+&@#\/%=~_|])/gim;
   // the callback function for the .replace method in JavaScript doesn't inherently provide a direct way to tell the iteration number (1st, 2nd, 3rd match) within the loop, so I have to build my own dollartree counter
   iDollarStoreCounter = 0;
-  // sReturn = sReturn.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>&nbsp;');
+  // sReturn = sReturn.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
   sReturn = sReturn.replaceAll(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) { 
       iDollarStoreCounter++;
 
@@ -337,8 +338,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
 
   // URLs starting with "www." (without // before it, or it'd re-link the ones done above).
   replacePattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-  // sReturn = sReturn.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-  sReturn = sReturn.replaceAll(replacePattern, '$1<a href="http://$2" ' + sTargetBlank + '>$2</a>');
+  // sReturn = sReturn.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>&nbsp;');
+  sReturn = sReturn.replaceAll(replacePattern, '$1<a href="http://$2" ' + sTargetBlank + '>$2</a>&nbsp;');
 
   // Change email addresses to mailto:: links.
   replacePattern = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
