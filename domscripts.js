@@ -358,10 +358,11 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // now fix the linebreak hack that I included at beginning to assist the regex to avoid html tags when parsing for urls
   sReturn = sReturn.replaceAll("\n<linebreak", "<");
 
-
+  return sReturn;
+}
 
 // hacky - bad hack-y design because i am possibly duplicating this script many times
-function add_longpressevent_onto_ToT_ahrefs(iDelay) {
+function dom_add_longpressevent_onto_ToT_ahrefs(iDelay) {
     // add a longpress event onto all 𝓣 ahrefs
     document.querySelectorAll("a").forEach(oo=>{
         if (oo.innerText.substring(0,2) == "𝓣") {
@@ -402,19 +403,6 @@ function add_longpressevent_onto_ToT_ahrefs(iDelay) {
         }
     })
 }
-setTimeout(() => { add_longpressevent_onto_ToT_ahrefs(); }, 1000);
-
-
-
-
-
-
-
-
-
-  return sReturn;
-}
-
 
 function datascripts_regexStripDomain(url) { // from searchtree.htm's fStripDomain()
     // var url = "https://plato.stanford.edu/search";
