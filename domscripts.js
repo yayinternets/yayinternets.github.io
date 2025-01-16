@@ -346,6 +346,10 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   sReturn = sReturn.replaceAll(/(^|\s|\n)y@@([\p{L}\p{M}\w-]+)/gu, "&nbsp;<a href='https://www.youtube.com/@$2'>y@@$2</a>&nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "&nbsp;<a href='https://www.youtube.com/$2'>y@$2</a>&nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "&nbsp;<a href='https://www.twitter.com/$2'>t@$2</a>&nbsp;");
+
+  sReturn = sReturn.replaceAll(/(^|\s|\n)b\@([\w-]+)/g, "&nbsp;<a href='https://bsky.app/profile/$2.bsky.social'>b@$2</a>&nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)f\@([\w-]+)/g, "&nbsp;<a href='https://www.facebook.com/$2/friends_mutual'>f@$2</a>&nbsp;");
+  
   sReturn = sReturn.replaceAll(/(^|\s|\n)\/u\/([\w-]+)/g, "&nbsp;<a href='https://old.reddit.com/user/$2'>/u/$2</a>&nbsp;")
   sReturn = sReturn.replaceAll(/(^|\s|\n)\/r\/([\w+-]+)/g, "&nbsp;<a href='https://old.reddit.com/r/$2'>/r/$2</a>&nbsp;")
 
