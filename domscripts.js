@@ -357,6 +357,61 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
 
   // now fix the linebreak hack that I included at beginning to assist the regex to avoid html tags when parsing for urls
   sReturn = sReturn.replaceAll("\n<linebreak", "<");
+
+
+
+// hacky - bad hack-y design because i am possibly duplicating this script many times
+function add_longpressevent_onto_ToT_ahrefs(iDelay) {
+    // add a longpress event onto all 𝓣 ahrefs
+    document.querySelectorAll("a").forEach(oo=>{
+        if (oo.innerText.substring(0,2) == "𝓣") {
+            var link = oo; // document.querySelector('a');
+            var timer;
+            if (iDelay) {} else (iDelay=500);
+            // var delay = 500; // Duration for long press in milliseconds (e.g., 500 ms)
+    
+            var startPress = () => {
+                timer = setTimeout(() => {
+                    onLongPress();
+                }, iDelay);
+            };
+    
+            var cancelPress = () => {
+                clearTimeout(timer);
+            };
+    
+            var onLongPress = () => {
+                // alert('Long press detected!');
+                oo.outerHTML = oo.innerText.substring(2,).split(" || ").map(o=>{
+                    if (o.indexOf(".") > -1 && o.indexOf(" ") == -1) {
+                        return `<a href="https://old.reddit.com/domain/${o}/new/">👽</a><a href="https://${o}">${o}</a>`;
+                    } else { return `<a href="https://theoryoftheory.github.io/searchtree.htm?search=${superencode(o)}">𝓣${o}</a>`; }
+                }).join(" || ");
+            };
+    
+            // Add event listeners for touch events
+            link.addEventListener('touchstart', startPress);
+            link.addEventListener('touchend', cancelPress);
+            link.addEventListener('touchmove', cancelPress);
+    
+            // Add event listeners for mouse events
+            link.addEventListener('mousedown', startPress);
+            link.addEventListener('mouseup', cancelPress);
+            link.addEventListener('mouseleave', cancelPress);
+    
+        }
+    })
+}
+setTimeout(() => { add_longpressevent_onto_ToT_ahrefs(); }, 1000);
+
+
+
+
+
+
+
+
+
   return sReturn;
 }
 
