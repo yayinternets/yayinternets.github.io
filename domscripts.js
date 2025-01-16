@@ -5,6 +5,53 @@ function dom_displayTDContents(oElement) {
     newWindow.document.write(tdContent);
 }
 
+function dom_add_longpressevent_onto_ToT_ahrefs(iDelay) {
+    // add a longpress event onto all 𝓣 ahrefs
+    document.querySelectorAll("a").forEach(oLink=>{
+        console.log("wat");
+        if (oLink.innerText.substring(0,2) == "𝓣") {
+            console.log("blah");
+            // var link = oo; // document.querySelector('a');
+            oLink.style.color="green";
+            var timer;
+            if (iDelay) {} else (iDelay=500);
+            // var delay = 500; // Duration for long press in milliseconds (e.g., 500 ms)
+    
+            var startPress = () => {
+                timer = setTimeout(() => {
+                    onLongPress();
+                }, iDelay);
+            };
+    
+            var cancelPress = () => {
+                clearTimeout(timer);
+            };
+    
+            var onLongPress = () => {
+                // alert('Long press detected!');
+                // String.fromCharCode(160) is nbsp;
+                oLink.outerHTML = oLink.innerText.replaceAll(String.fromCharCode(160), " ").replaceAll(" / ", " || ").replaceAll(" and ", " || ").replaceAll(", ", " || ").substring(2,).split(" || ").map(o=>{
+                    if (o.indexOf(".") > -1 && o.indexOf(" ") == -1) {
+                        return `<a href="https://old.reddit.com/domain/${o}/new/">👽</a><a href="https://${o}">${o}</a>`;
+                    } else { return `<a href="https://theoryoftheory.github.io/searchtree.htm?search=${superencode(o)}">𝓣${o}</a>`; }
+                }).join(" || ");
+            };
+    
+            // Add event listeners for touch events
+            oLink.addEventListener('touchstart', startPress);
+            oLink.addEventListener('touchend', cancelPress);
+            oLink.addEventListener('touchmove', cancelPress);
+    
+            // Add event listeners for mouse events
+            oLink.addEventListener('mousedown', startPress);
+            oLink.addEventListener('mouseup', cancelPress);
+            oLink.addEventListener('mouseleave', cancelPress);
+    
+        }
+    })
+}
+
+
 function dom_makeImgAltsHoverableText(sColor, sBGColor, iScale, iFontSize) {
     // via https://jsfiddle.net/joplomacedo/5cL31o0g/
     if (sBGColor) {} else {sBGColor = "rgba(36, 62, 206, 0.6)"; }
