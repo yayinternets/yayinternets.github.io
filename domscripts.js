@@ -295,7 +295,7 @@ function domscripts_unorderedListify(sString) {
             }
             iSpaceIndents = undefined; iPreviousSpaceIndents = -1; iULIndents = 0; // reset iSpaceIndents to undefined for debugging purposes
             
-            if (e.startsWith("#")) {
+            if (e.startsWith("#")) { // <h1></h1> code
                 iNumberOfOctothorpes = (e.match(/^#+/g) || [])[0].length;
                 if (iNumberOfOctothorpes > 6) { iNumberOfOctothorpes = 6; } // nothing beyond h6
                 sHTMLTitleTag = "h" + iNumberOfOctothorpes;
@@ -342,16 +342,16 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   
   // REPLACE y@channel, t@tuiterer, /u/redditor here
   // britney? - need to change twitter and reddit to match youtube's unicode/í-matching interntional words
-  // sReturn = sReturn.replaceAll(/(^|\s|\n)y\@([\w-]+)/g, "&nbsp;<a href='https://www.youtube.com/@$2'>y@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)y@@([\p{L}\p{M}\w-]+)/gu, "&nbsp;<a href='https://www.youtube.com/@$2'>y@@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "&nbsp;<a href='https://www.youtube.com/$2'>y@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "&nbsp;<a href='https://www.twitter.com/$2'>t@$2</a>&nbsp;");
+  // sReturn = sReturn.replaceAll(/(^|\s|\n)y\@([\w-]+)/g, "&nbsp; <a href='https://www.youtube.com/@$2'>y@$2</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@@([\p{L}\p{M}\w-]+)/gu, "&nbsp; <a href='https://www.youtube.com/@$2'>y@@$2</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "&nbsp; <a href='https://www.youtube.com/$2'>y@$2</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "&nbsp; <a href='https://www.twitter.com/$2'>t@$2</a> &nbsp;");
 
-  sReturn = sReturn.replaceAll(/(^|\s|\n)b\@([\w-]+)/g, "&nbsp;<a href='https://bsky.app/profile/$2.bsky.social'>b@$2</a>&nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)f\@([\w-]+)/g, "&nbsp;<a href='https://www.facebook.com/$2/friends_mutual'>f@$2</a>&nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)b\@([\w-]+)/g, "&nbsp; <a href='https://bsky.app/profile/$2.bsky.social'>b@$2</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)f\@([\w-]+)/g, "&nbsp;<a href='https://www.facebook.com/$2/friends_mutual'>f@$2</a> &nbsp;");
   
-  sReturn = sReturn.replaceAll(/(^|\s|\n)\/u\/([\w-]+)/g, "&nbsp;<a href='https://old.reddit.com/user/$2'>/u/$2</a>&nbsp;")
-  sReturn = sReturn.replaceAll(/(^|\s|\n)\/r\/([\w+-]+)/g, "&nbsp;<a href='https://old.reddit.com/r/$2'>/r/$2</a>&nbsp;")
+  sReturn = sReturn.replaceAll(/(^|\s|\n)\/u\/([\w-]+)/g, "&nbsp; <a href='https://old.reddit.com/user/$2'>/u/$2</a> &nbsp;")
+  sReturn = sReturn.replaceAll(/(^|\s|\n)\/r\/([\w+-]+)/g, "&nbsp; <a href='https://old.reddit.com/r/$2'>/r/$2</a> &nbsp;")
 
   
   // REPLACE [realmarkdown](https://www.link.com) here
@@ -360,7 +360,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // sReturn = sReturn.replace(replacePattern00, '<a' + sTargetBlank + ' href="$2">$1</a>');
   sReturn = sReturn.replaceAll(replacePattern, function(sTotalMatch, sFirstMatch, sSecondMatch, iPositionMatching) {
       sSecondMatch = sSecondMatch.startsWith('http') ? sSecondMatch : 'https://' + sSecondMatch;
-      return `&nbsp;<a href='${sSecondMatch}'>${sFirstMatch}</a>&nbsp;`;
+      return `&nbsp; <a href='${sSecondMatch}'>${sFirstMatch}</a> &nbsp;`;
   });
   
   // .replace('"', '%22').replace("'", "%27");
@@ -368,12 +368,12 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // moiquestion: there are 3 groups so why does $1, $2 not make sense here?  is the second group really a "negative lookahead" and doesn't count as a group?
   // replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp):\/\/[\S]*)/gim;
   // replacePattern = /([\S]*)!!(?<!href="|')(\b(https?|ftp)?(:\/\/)?[\S]+)/gim;
-  // sReturn = sReturn.replaceAll(replacePattern, '&nbsp;<a' + sTargetBlank + ' href="$2">$1</a>&nbsp;');
+  // sReturn = sReturn.replaceAll(replacePattern, '&nbsp; <a' + sTargetBlank + ' href="$2">$1</a> &nbsp;');
   replacePattern = /([\S]*)!!(?<!href="|')([\S]+\.[\S]+)/gim;
   sReturn = sReturn.replace(replacePattern, (match, p1, p2) => {
     // Ensure p2 starts with a valid protocol
     const href = p2.startsWith('http://') || p2.startsWith('https://') ? p2 : `https://${p2}`;
-    return `&nbsp;<a${sTargetBlank} href="${href}">${p1}</a>&nbsp;`;
+    return `&nbsp; <a${sTargetBlank} href="${href}">${p1}</a> &nbsp;`;
   });
 
   
@@ -399,8 +399,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
 
   // URLs starting with "www." (without // before it, or it'd re-link the ones done above).
   replacePattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-  // sReturn = sReturn.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>&nbsp;');
-  sReturn = sReturn.replaceAll(replacePattern, '$1<a href="http://$2" ' + sTargetBlank + '>$2</a>&nbsp;');
+  // sReturn = sReturn.replace(replacePattern2, '$1 <a href="http://$2" target="_blank">$2</a> &nbsp;');
+  sReturn = sReturn.replaceAll(replacePattern, '$1 <a href="http://$2" ' + sTargetBlank + '>$2</a> &nbsp;');
 
   // REPLACE user@email.com - Change email addresses to mailto:: links.
   // replacePattern = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
@@ -437,8 +437,6 @@ return Array.from(domTable.querySelectorAll("tr")).map(o=>(Array.from(o.querySel
    copy(convertDomTableToGooglesheetsPasteableText(domTable));
    */
 }
-
-
 // dom_2022 "meta-dom" functions - dom_modalize_img_tags,dom_li_paginate, dom_li_paginate_fadeGroup, dom_changeTitleAndFavicon, dom_addImageOverlays, dom_deconstructDOM, dom_load_library
 function dom_modalize_img_tags() {
     // solution from codepen https://codepen.io/RileyB/pen/XQyaXy
@@ -835,8 +833,6 @@ function dom_load_library(sLibrary, bDisplaySample) {
 
 
 
-
-
 // dom_2022 reset2 editors ace vs codeMirror
 
 function editor_ace_ify(e) {
@@ -923,8 +919,6 @@ domLoadScripts_Link(`https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/ad
        
     }, 300)
 }
-
-
 // domBASICscripts => domscripts.serverUNsafe and ES5_UNsafe
 // try { // domscripts.serverUNsafe and ES5_UNsafe
 /* BEGIN - THESE FUNCTIONS SHOULD NEVER BE ADDED TO datascripts.js? */
@@ -1174,9 +1168,7 @@ function dom_BindVariable(sVariable) { // sVariable is the name of the globalvar
 
 
 
-// } catch(e) { console.log("ERROR in domscripts.js " - e) }
-
-// domCOLORS //
+// } catch(e) { console.log("ERROR in domscripts.js " - e) }// domCOLORS //
 
 function getRandomLightColor() {
 // Excellent answer. Worked great for me because I was also wanting to avoid white and grey. – 
@@ -1190,16 +1182,12 @@ function getRandomDarkColor() {
         color += Math.floor(Math.random() * 10);
     }
     return color;
-}
-
-// domDEBUGGINGscripts //
+}// domDEBUGGINGscripts //
 
 var copyS = function(o) { copy(JSON.stringify(o)); }
 var copyF = function(f) { copy( f.toString() ) }
 
-var alertS = function(o) { alert(JSON.stringify(o)); }
-
-// domASCIIscripts (maybe dataASCIIscripts?)
+var alertS = function(o) { alert(JSON.stringify(o)); }// domASCIIscripts (maybe dataASCIIscripts?)
 fStringFromCharCode = function() {
     // js's String.fromCharCode(10) vs gs's CHAR(10)
     // "·".charCodeAt()
@@ -1218,9 +1206,7 @@ fStringFromCharCode = function() {
         "nbsp": `String.fromCharCode("160")`, // CQP.pushToGithub's 
         "bullets": 'String.fromCharCode(8226)+String.fromCharCode(9702)+String.fromCharCode(8226)+String.fromCharCode(8227)+String.fromCharCode(8259)+String.fromCharCode(9675)+String.fromCharCode(9689)+String.fromCharCode(10686)+String.fromCharCode(10687)+String.fromCharCode(164)',
     }
-}
-
-// domJQUERYscripts
+}// domJQUERYscripts
 // beauseph/battk 1 hour ago seems like "define.amd" evaluates to {"JQuery": true}?  I didn't even realize the the Rhino or GraalVM engine is using JQuery? jquery was popular enough when amd was written that it got its own standardized name
 
 // add ajax/xml functionality (or can this be done strictly vanilla?)
@@ -1231,11 +1217,7 @@ fStringFromCharCode = function() {
 
 // add $Hints?
 
-// add $FETCH?  it's just $.ajax(), pretty simple right?
-
-// dom_LZString,Moment,date-fns_scripts?
-
-// dom_WordCloudify
+// add $FETCH?  it's just $.ajax(), pretty simple right?// dom_LZString,Moment,date-fns_scripts?// dom_WordCloudify
 function dom_WordCloudify(aArray, domCanvas, fFunction) {
     if (fFunction) {} else { fFunction = function(a) { alert(a); } }
     // prereqs: <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js">
@@ -1313,9 +1295,7 @@ function dom_WordCloudify(aArray, domCanvas, fFunction) {
     // redrawButton.addEventListener('click', drawWordCloud);
 
     drawWordCloud();
-}
-
-// dom_D3.js_scripts - where charts, graphs, maps, grams and plots reign supreme
+}// dom_D3.js_scripts - where charts, graphs, maps, grams and plots reign supreme
 // d3_PieChartify, d3_histogramify, d3_barPlotify, d3_StreamGraphify
 
 /* wishlist:
@@ -1788,8 +1768,6 @@ function d3_StreamGraphify(data) {
 
 }
 
-
-
 // dom_highcharts.js_scripts //
 
 function highchartsBarPlotify(data, sTitle, sSubtitle, sYAxis) {
@@ -1850,15 +1828,9 @@ function highchartsBarPlotify(data, sTitle, sSubtitle, sYAxis) {
       }]
     });
 
-}
+}// dom_chart.js_scripts// dom_P5.js_scripts
 
-// dom_chart.js_scripts
-
-// dom_P5.js_scripts
-
-// p5 sound? - https://p5js.org/examples/sound-oscillator-frequency.html?
-
-// domGSDSscripts => NEW googlesheets scripts
+// p5 sound? - https://p5js.org/examples/sound-oscillator-frequency.html?// domGSDSscripts => NEW googlesheets scripts
 // GSDS_CELL, GSDS_RANGE1D, GSDS_RANGE2D, GSDS_CELL_value, GSDS_CELL_valueParseInt, GSDS_RANGE1D_values, GSDS_RANGE2D_values
 // GSDS_getOSR, GSDS_distinguishDomTableAndA1Notation, GSDS_domReplaceAsterisksInA1Notation, GSDS_inputifyTDRANGE, GSDS_eval, GSDS_domTDToA1Notation, GSDS_evalifyTDRANGE
 // domGetTDTextOrValue, domGetTDTextOrValueParseInt, domSetTDTextOrValue
@@ -2250,8 +2222,6 @@ function highchartsBarPlotify(data, sTitle, sSubtitle, sYAxis) {
 
 // } catch(e) { console.log(e); }
 // END NEW googlesheets.scripts.js
-
-
 // dom Spreadsheet functions 
 
 dom_jsSpreadsheetify = function(data, dom) {
@@ -2262,9 +2232,7 @@ dom_jsSpreadsheetify = function(data, dom) {
    jspreadsheet($$$$(dom), {
        data:data,
    });
-}
-
-// domADDELscripts =>
+}// domADDELscripts =>
 
 // DO NOT USE THIS LINE- overrides addEventListener: addEventListener = function(oElements, sType, iIndex, fFunction) { return addEL(oElements, sType, iIndex, fFunction); }
 
@@ -2318,9 +2286,7 @@ function addEL(aElements, aType, eventDotDetail, fFunction) { // vs addEventList
     })
   })
 }
-function addEventListenerClickXYZ(o,i,f) { return addELClick(o,i,f); }
-
-// dom_animate.css_scripts => animate.css
+function addEventListenerClickXYZ(o,i,f) { return addELClick(o,i,f); }// dom_animate.css_scripts => animate.css
     // BEGIN animate.css scripts
     function addAnimateCSSToHover(sSelector, sClass) {  // jQuery-dependent
        sClass = 'animated animate__animated animate__' + sClass; 
@@ -2442,9 +2408,7 @@ function addEventListenerClickXYZ(o,i,f) { return addELClick(o,i,f); }
           });
       }; function $$$a_animate(el,animation,idelay,fFunction1,fFunction2) { return $$$animate(el,animation,idelay,fFunction1,fFunction2); };
       
-    // END animate.css scripts
-
-// domINJECTIFYscripts => domLoadStyles_CSS, domLoadStyles_Link, etc
+    // END animate.css scripts// domINJECTIFYscripts => domLoadStyles_CSS, domLoadStyles_Link, etc
     // 3 SCRIPTS - INJECT STYLES AND SCRIPTS (TO DEPRECATE) 
     domAppendToHead = function(s){ $$$('head')[0].append(s); }
     domAppendStyle = function(e){const t=document.createElement("style");t.textContent=e,document.head.append(t)}; addStyle = domAppendStyle;
@@ -2517,9 +2481,7 @@ function addEventListenerClickXYZ(o,i,f) { return addELClick(o,i,f); }
             }, (document.getElementsByTagName("head")[0] || document.body).appendChild(c)) : n && n()
         }()
     }
-    */
-
-// fauxcopy (aot with copy)
+    */// fauxcopy (aot with copy)
 function fauxcopy(sText){
   var aux = document.createElement("div");
   aux.setAttribute("contentEditable", true);
@@ -2530,9 +2492,7 @@ function fauxcopy(sText){
   aux.focus();
   document.execCommand("copy");
   document.body.removeChild(aux);
-}
-
-// domFETCHscripts => SubmitSuperNinjaForm,fetch_XMLHttpRequest,oGetAllParameters_CLIENT(), oSetAParameter_CLIENT
+}// domFETCHscripts => SubmitSuperNinjaForm,fetch_XMLHttpRequest,oGetAllParameters_CLIENT(), oSetAParameter_CLIENT
 fetch_XMLHttpRequest=function(oHTTPMethodURLPayload) {
     superencode = function (str){  return encodeURIComponent(str).replace(/'/g, "%27"); }
 
@@ -2689,9 +2649,7 @@ function oSetAParameter_CLIENT(oParameters) {
 
     sURL = sURL + "?" + Object.keys(oGetAllParameters_COPY).map(o=>o + "=" + superencode(oGetAllParameters_COPY[o])).join("&");
     return sURL;
-}
-
-// domENCRYPTscripts => superencrypt and decrypt (CryptoJS,LZString)
+}// domENCRYPTscripts => superencrypt and decrypt (CryptoJS,LZString)
 function superencrypt(aVO, sPassword) { // need to fix oo.toString() to JSON.stringify(oo) if I want to convert objects?  or nah?
   // domLoadScripts_Link("https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js")
   // copy(superencrypt([["a", "b", "c"],["d - 1", "e - 2", "f - 3"]], "hint"))
@@ -2818,9 +2776,7 @@ function superdecrypt(aVO, sPassword) {
         return sError;
     }
 
-}
-
-// domISLANDSscripts => aGet2DIslands - original es6 version (w/o sample)
+}// domISLANDSscripts => aGet2DIslands - original es6 version (w/o sample)
 // fing charity begins here at StackOverflow - refactor this into datascripts or keep in googlesheets.gs?
 // https://stackoverflow.com/questions/68645601/how-to-extract-a-set-of-isolated-2d-arrays-from-a-larger-2d-array
 function aGet2DIslands (aVO) {
@@ -2917,9 +2873,7 @@ aGet2DIslandsRanges = function(aVO) {
         return sFirstCell + ":" + sLastCell;
     });
     return aVO_A1Notations_Islands_Ranges;
-}
-
-// domDATAHTML.es6.scripts (aka domscripts.2.js)
+}// domDATAHTML.es6.scripts (aka domscripts.2.js)
 /* domDATAHTMLscripts (superset of dataHTMLscripts.js) => datahtmlscripts.js => isomorphic, vanilla, es5-ish datascripts that are related to HTML and datascripts, without needing libraries (the dom, jquery, or lodash */
 // refactor this whole solution into dataDATAHTMLscripts?  or dataHTMLscripts?  why dom?  because es5?
 // note hyperlink() is both html and gs formula related? more functions similar to this concept"?
@@ -3085,9 +3039,7 @@ function HTMLify(aCQPRecordsOriented, bSansHTMLTag) {
 };
 // I removed CQPify polyfill because "CQPify()" is now defined as "HTMLify() with server access"
 // HTMLify alone is itself just a pure vanilla datascript.js function
-// function CQPify(aCQPRecordsOriented) { return HTMLify(aCQPRecordsOriented) };
-
-// domDATAHTML.es5.scripts
+// function CQPify(aCQPRecordsOriented) { return HTMLify(aCQPRecordsOriented) };// domDATAHTML.es5.scripts
 // THE FOLLOWING CODE USED TO BE "domscripts.serversafe", but now its just part of domDATAHTML.es.js scripts
 // pseudocode for new domscript function - refactor convertOSRToHTMLTable, convertRecordsOrientedArrayToHTMLTable, convertValuesOrientedToHTMLTable into one solution? 
 toHTMLSelect=function(aArray, sSelectIDOrClasses, iSelected, bBlank) { // refractor this to accept array of values vs array of objects (select id?)
@@ -3322,9 +3274,7 @@ function hyperlink(sURL, sName, bNoTarget) {
    } else { // googlesheets hyperlink
      return "<a " + ((bNoTarget) ? "": "target='_blank' ") + "href='" + sURL + "'>link</a>";
    }
-}
-
-extractFROMTO = function(sLocations) {
+}extractFROMTO = function(sLocations) {
     sLocations = sLocations.toUpperCase();
     // extractFROMTO("FROM stockland TO dgu");
     // var sLocations = "FROM stockland TO dgu";
