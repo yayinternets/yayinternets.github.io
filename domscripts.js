@@ -344,7 +344,7 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // britney? - need to change twitter and reddit to match youtube's unicode/í-matching interntional words
   // sReturn = sReturn.replaceAll(/(^|\s|\n)y\@([\w-]+)/g, "&nbsp; <a href='https://www.youtube.com/@$2'>y@$2</a> &nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)y@@([\p{L}\p{M}\w\/-]+)/gu, "&nbsp; <a href='https://www.youtube.com/@$2'>y@@$2</a> &nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]\/+)/gu, "&nbsp; <a href='https://www.youtube.com/$2'>y@$2</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w\/-]+)/gu, "&nbsp; <a href='https://www.youtube.com/$2'>y@$2</a> &nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "&nbsp; <a href='https://www.twitter.com/$2'>t@$2</a> &nbsp;");
 
   sReturn = sReturn.replaceAll(/(^|\s|\n)b\@([\w-]+)/g, "&nbsp; <a href='https://bsky.app/profile/$2.bsky.social'>b@$2</a> &nbsp;");
@@ -352,7 +352,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
 
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\w-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$1'>w@$2</a> &nbsp;");
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\w\(\)\/\-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\p{L}\w\(\)\/\.\-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
+  // sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\p{L}\w\(\)\/\.\-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\p{L}\p{N}\(\)\/\.\-]+)/gu, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w_([a-z]{2})@([\w-]+)/g, "&nbsp;<a href='https://$2.wikipedia.org/wiki/$3'>$&</a> &nbsp;");
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w_([a-z]{2})@([\p{L}\w-]+)/gu, "&nbsp;<a href='https://$2.wikipedia.org/wiki/$3'>$&</a> &nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)w_([a-z]{2})@([\p{L}\w\(\)\/\.\-]+)/gu, "&nbsp;<a href='https://$2.wikipedia.org/wiki/$3'>$&</a> &nbsp;");
