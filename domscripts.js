@@ -343,8 +343,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // REPLACE y@channel, t@tuiterer, b@blueskier, f@facebooker, w_fr@article, /u/redditor here
   // britney? - need to change twitter and reddit to match youtube's unicode/í-matching interntional words
   // sReturn = sReturn.replaceAll(/(^|\s|\n)y\@([\w-]+)/g, "&nbsp; <a href='https://www.youtube.com/@$2'>y@$2</a> &nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)y@@([\p{L}\p{M}\w-]+)/gu, "&nbsp; <a href='https://www.youtube.com/@$2'>y@@$2</a> &nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]+)/gu, "&nbsp; <a href='https://www.youtube.com/$2'>y@$2</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@@([\p{L}\p{M}\w\/-]+)/gu, "&nbsp; <a href='https://www.youtube.com/@$2'>y@@$2</a> &nbsp;");
+  sReturn = sReturn.replaceAll(/(^|\s|\n)y@([\p{L}\p{M}\w-]\/+)/gu, "&nbsp; <a href='https://www.youtube.com/$2'>y@$2</a> &nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)t\@([\w-]+)/g, "&nbsp; <a href='https://www.twitter.com/$2'>t@$2</a> &nbsp;");
 
   sReturn = sReturn.replaceAll(/(^|\s|\n)b\@([\w-]+)/g, "&nbsp; <a href='https://bsky.app/profile/$2.bsky.social'>b@$2</a> &nbsp;");
