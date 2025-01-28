@@ -353,7 +353,8 @@ function domscripts_linkify(sInputText, sTitleLogic, bTargetBlank) {
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\w-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$1'>w@$2</a> &nbsp;");
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\w\(\)\/\-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\p{L}\w\(\)\/\.\-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
-  sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\p{L}\p{N}\(\)\/\.\-]+)/gu, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
+  // sReturn = sReturn.replaceAll(/(^|\s|\n)w\@([\p{L}\p{N}\(\)\/\.\-]+)/gu, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
+  sReturn = sReturn.replace(/(^|\s|\n)w\@([\w\u00C0-\u017F\(\)\/\.\-]+)/g, "&nbsp;<a href='https://en.wikipedia.org/wiki/$2'>$&</a> &nbsp;");
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w_([a-z]{2})@([\w-]+)/g, "&nbsp;<a href='https://$2.wikipedia.org/wiki/$3'>$&</a> &nbsp;");
   // sReturn = sReturn.replaceAll(/(^|\s|\n)w_([a-z]{2})@([\p{L}\w-]+)/gu, "&nbsp;<a href='https://$2.wikipedia.org/wiki/$3'>$&</a> &nbsp;");
   sReturn = sReturn.replaceAll(/(^|\s|\n)w_([a-z]{2})@([\p{L}\w\(\)\/\.\-]+)/gu, "&nbsp;<a href='https://$2.wikipedia.org/wiki/$3'>$&</a> &nbsp;");
